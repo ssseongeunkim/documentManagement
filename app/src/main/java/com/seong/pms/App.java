@@ -155,17 +155,6 @@ public class App {
                 break;
               } // if
 
-              //              int valuseNum = 0;
-              //
-              //              if (!(valuse.replaceAll("[^0-9]", ".").equals(".")))
-              //              {
-              //                // 사용자가 이름(문자열)을 입력했을 경우에는 해당 코드실행 x
-              //                // 숫자를 입력했을때만 String으로 받은 값을 int로 변환
-              //                valuseNum = Integer.parseInt(valuse);
-              //              }
-              //
-              //              System.out.println(valuseNum);
-
               // 사용자가 입력한 직원의 존재여부 확인을 위한 변수(있으면 1, 없으면 0)
               int check = 0;
 
@@ -175,7 +164,6 @@ public class App {
                 if (valuse.equalsIgnoreCase(name[i]) || valuse.equals((i+1) + ""))
                 {
                   // 해당 직원이 있을 때
-                  //                  System.out.println("있는 직원입니다.");
                   if (menu == 2)
                   {
                     // 휴가신청서 
@@ -293,8 +281,6 @@ public class App {
             System.out.println();
             System.out.println("= 모든 문서 List =");
 
-            //            int number = 0;
-
             for (int i = 0; i < turn; i++)
             {
               if (name[i] != null)
@@ -381,8 +367,6 @@ public class App {
               System.out.println();
               System.out.println("= 미승인 문서 List =");
 
-              //              int number = 0;
-
               for (int i = 0; i < turn; i++)
               {
                 if (holidayReason[i] != null && holidayApproval[i].equals("미승인"))
@@ -399,7 +383,6 @@ public class App {
               System.out.print("승인할 문서의 작성자 사번 또는 이름을 입력하세요.> ");
               String valuse = scanner.nextLine();
 
-              //              check = 0;
               int holidayCheck = 0;
               int outCheck = 0;
               int index = 0;
@@ -583,21 +566,9 @@ public class App {
                 break;
               } // while
 
-
               break;
 
             } // while
-
-
-
-
-
-
-
-
-
-
-
 
           } else if (menu == 0)
           {
@@ -612,10 +583,7 @@ public class App {
           {
             System.out.println("없는 메뉴 입니다. 다시 입력해주세요."); 
           }
-        }
-
-
-
+        } // while
 
       } else if (menu == 99)
       {
