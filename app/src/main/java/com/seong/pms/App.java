@@ -31,6 +31,12 @@ public class App {
     String[] outReason = new String[SIZE]; // 퇴사사유
     String[] outApproval = new String[SIZE]; // 퇴사승인여부
 
+    for (int i = 0; i < SIZE; i++)
+    {
+      holidayApproval[i] = "미승인";
+      outApproval[i] = "미승인";
+    }
+
 
     while (company)
     {
@@ -169,11 +175,12 @@ public class App {
                 if (valuse.equalsIgnoreCase(name[i]) || valuse.equals((i+1) + ""))
                 {
                   // 해당 직원이 있을 때
-                  System.out.println("있는 직원입니다.");
+                  //                  System.out.println("있는 직원입니다.");
                   if (menu == 2)
                   {
                     // 휴가신청서 
-                    System.out.print("종류(1. 연차 2. 반차 3. 병가 4. 경조)> ");
+                    System.out.println();
+                    System.out.print("휴가종류(1. 연차 2. 반차 3. 병가 4. 경조)> ");
                     userChoice = scanner.nextInt();
                     scanner.nextLine();
 
@@ -214,6 +221,7 @@ public class App {
                   } else 
                   {
                     // 사직서
+                    System.out.println();
                     System.out.print("퇴사날짜(yyyy-MM-dd)> ");
                     outDate[i] = Date.valueOf(scanner.nextLine());
 
@@ -283,95 +291,144 @@ public class App {
           {
             // 모든 문서 리스트
             System.out.println();
-            System.out.println("- 모든 문서 List -");
+            System.out.println("= 모든 문서 List =");
 
-            int number = 0;
+            //            int number = 0;
 
             for (int i = 0; i < turn; i++)
             {
               if (name[i] != null)
               {
-                System.out.printf("%d. %s(%d)직원의 정보\n", ++number, name[i], id[i]);
+                System.out.printf("- %s(%d)직원의 정보\n", name[i], id[i]);
 
                 if (holidayReason[i] != null)
                 {
-                  System.out.printf("%d. %s(%d)직원의 휴가신청서\n", ++number, name[i], id[i]);
+                  System.out.printf("- %s(%d)직원의 휴가신청서\n", name[i], id[i]);
                 } // if
 
                 if (outReason[i] != null)
                 {
-                  System.out.printf("%d. %s(%d)직원의 사직서\n", ++number, name[i], id[i]);
+                  System.out.printf("- %s(%d)직원의 사직서\n", name[i], id[i]);
                 } // if
               } // if
             } // for
           } else if (menu == 2)
           {
             // 승인 된 문서 리스트
-            System.out.println();
-            System.out.println("- 승인 된 문서 List -");
-
-            int number = 0;
+            int check = 0;
 
             for (int i = 0; i < turn; i++)
             {
-              if (holidayApproval[i] != null && holidayApproval[i].equals("승인"))
+              if (holidayApproval[i].equals("미승인") && outApproval[i].equals("미승인"))
               {
-                System.out.printf("%d. %s(%d)직원의 휴가신청서\n", ++number, name[i], id[i]);
+                // 휴가신청서와 사직서의 승인여부가 '미승인'일때
+                check++;
               } // if
 
-              if (outApproval[i] != null &&  outApproval[i].equals("승인"))
+            } // for
+
+            if (check == turn)
+            {
+              System.out.println("승인된 문서가 없습니다.");
+              continue;
+            }
+
+            System.out.println();
+            System.out.println("= 승인 된 문서 List =");
+
+            for (int i = 0; i < turn; i++)
+            {
+              if (holidayApproval[i].equals("승인"))
               {
-                System.out.printf("%d. %s(%d)직원의 사직서\n", ++number, name[i], id[i]);
+                System.out.printf("- %s(%d)직원의 휴가신청서\n", name[i], id[i]);
+              } // if
+
+              if (outApproval[i].equals("승인"))
+              {
+                System.out.printf("- %s(%d)직원의 사직서\n", name[i], id[i]);
               } // if
             } // for
 
           } else if (menu == 3)
           {
             // 미승인 문서 리스트
+            int check = 0;
+
+            for (int i = 0; i < turn; i++)
+            {
+              if (holidayReason[i] == null && holidayApproval[i].equals("미승인")
+                  && outReason[i] == null && outApproval[i].equals("미승인"))
+              {
+                check++;
+              }
+
+              if (holidayReason[i] != null && holidayApproval[i].equals("승인")
+                  && outReason[i] != null && outApproval[i].equals("승인"))
+              {
+                check++;
+              }
+
+            } // for
+
+            if (check >= turn)
+            {
+              System.out.println("승인할 문서가 없습니다.");
+              continue;
+            }
+
             while(true)
             {
               System.out.println();
-              System.out.println("- 미승인 문서 List -");
+              System.out.println("= 미승인 문서 List =");
 
-              int number = 0;
+              //              int number = 0;
 
               for (int i = 0; i < turn; i++)
               {
-                if (holidayApproval[i] != null && holidayApproval[i].equals("미승인"))
+                if (holidayReason[i] != null && holidayApproval[i].equals("미승인"))
                 {
-                  System.out.printf("%d. %s(%d)직원의 휴가신청서\n", ++number, name[i], id[i]);
+                  System.out.printf("- %s(%d)직원의 휴가신청서\n", name[i], id[i]);
                 } // if
 
-                if (outApproval[i] != null &&  outApproval[i].equals("미승인"))
+                if (outReason[i] != null &&  outApproval[i].equals("미승인"))
                 {
-                  System.out.printf("%d. %s(%d)직원의 사직서\n", ++number, name[i], id[i]);
+                  System.out.printf("- %s(%d)직원의 사직서\n", name[i], id[i]);
                 } // if
               } // for
 
               System.out.print("승인할 문서의 작성자 사번 또는 이름을 입력하세요.> ");
               String valuse = scanner.nextLine();
 
-              int check = 0;
+              //              check = 0;
+              int holidayCheck = 0;
+              int outCheck = 0;
+              int index = 0;
+
+              System.out.println();
 
               for (int i = 0; i < turn; i++)
               {
                 // 해당 직원이 있는지 검사
-                if ((valuse.equalsIgnoreCase(name[i]) && holidayApproval[i] != null && holidayApproval[i].equals("미승인"))
-                    || (valuse.equals((i+1) + "") && holidayApproval[i] != null && holidayApproval[i].equals("미승인")))
+                if ((valuse.equalsIgnoreCase(name[i]) && holidayReason[i] != null && holidayApproval[i].equals("미승인"))
+                    || (valuse.equals((i+1) + "") && holidayReason[i] != null && holidayApproval[i].equals("미승인")))
                 {
                   // 해당 직원이 있고, 미승인된 휴가신청서가 있을 때
-                  System.out.println(name[i] + "직원이 입력한 휴가신청서가 있습니다.");
+                  System.out.println(name[i] + "직원이 입력한 [휴가신청서]가 있습니다.");
 
                   check++;
+                  holidayCheck++;
+                  index = i;
                 } // if
 
-                if ((valuse.equalsIgnoreCase(name[i]) && outApproval[i] != null && outApproval[i].equals("미승인"))
-                    || (valuse.equals((i+1) + "") && outApproval[i] != null && outApproval[i].equals("미승인")))
+                if ((valuse.equalsIgnoreCase(name[i]) && outReason[i] != null && outApproval[i].equals("미승인"))
+                    || (valuse.equals((i+1) + "") && outReason[i] != null && outApproval[i].equals("미승인")))
                 {
                   // 해당 직원이 있고, 미승인된 사직서가 있을 때
-                  System.out.println(name[i] + "직원이 입력한 사직서가 있습니다.");
+                  System.out.println(name[i] + "직원이 입력한 [사직서]가 있습니다.");
 
                   check++;
+                  outCheck++;
+                  index = i;
                 } // if
               } // for
 
@@ -379,7 +436,153 @@ public class App {
               {
                 System.out.println("없는 결과입니다. 다시 입력해주세요.");
                 continue;
-              }
+              } // if
+
+              while(true)
+              {
+                if (holidayCheck > 0 && outCheck > 0)
+                {
+                  // 휴가신청서와 사직서 모두 있는 경우
+                  System.out.print("확인 할 문서를 선택하세요.(1. 휴가신청서 2. 사직서)> ");
+                  userChoice = scanner.nextInt();
+                  scanner.nextLine();
+
+                  if (userChoice == 1)
+                  {
+                    // 휴가신청서 승인 할 때
+                    System.out.println("--------------------------------------------------------");
+                    System.out.println("[휴가신서]");
+                    System.out.printf("사번 : %d\n", id[index]);
+                    System.out.printf("서명 : %s\n", name[index]);
+                    System.out.printf("부서 : %s\n", department[index]);
+                    System.out.printf("휴가종류 : %s\n", holiday[index]);
+                    System.out.printf("휴가날짜 : %s ~ %s\n", startDate[index], endDate[index]);
+                    System.out.printf("상기 %s(본인)은 %s로 인하여 휴가신청서를 제출하오니\n"
+                        + "허락하여 주시기 바랍니다.\n", name[index], holidayReason[index]);
+                    System.out.printf("[승인여부] : %s\n", holidayApproval[index]);
+                    System.out.println("--------------------------------------------------------");
+                    System.out.print("휴가신청을 승인하시겠습니까? (y/N)> ");
+                    String answer = scanner.nextLine();
+
+                    if (answer.equalsIgnoreCase("y"))
+                    {
+                      System.out.println("승인하셨습니다.");
+                      holidayApproval[index] = "승인";
+                    } else
+                    {
+                      System.out.println("미승인하셨습니다.");
+                    }
+
+
+                  } else if (userChoice == 2)
+                  {
+                    // 사직서 신청할 떄
+                    System.out.println("--------------------------------------------------------");
+                    System.out.println("[사직서]");
+                    System.out.printf("사번 : %d\n", id[index]);
+                    System.out.printf("서명 : %s\n", name[index]);
+                    System.out.printf("부서 : %s\n", department[index]);
+                    System.out.printf("입사날짜 : %s\n", joinDate[index]);
+                    System.out.printf("퇴사날짜 : %s\n", outDate[index]);
+                    System.out.printf("상기 %s(본인)은 %s로 인하여 사직서를 제출하오니\n"
+                        + "허락하여 주시기 바랍니다.\n", name[index], outReason[index]);
+                    System.out.printf("[승인여부] : %s\n", outApproval[index]);
+                    System.out.println("--------------------------------------------------------");
+                    System.out.print("사직서를 승인하시겠습니까? (y/N)> ");
+                    String answer = scanner.nextLine();
+
+                    if (answer.equalsIgnoreCase("y"))
+                    {
+                      System.out.println("승인하셨습니다.");
+                      outApproval[index] = "승인";
+                    } else
+                    {
+                      System.out.println("미승인하셨습니다.");
+                    }
+
+
+                  } else
+                  {
+                    System.out.println("없는 메뉴입니다. 다시 입력해주세요.");
+                  }
+
+                } else if (holidayCheck > 0)
+                {
+                  // 휴가신청서만 있을 경우
+                  System.out.print("[휴가신청서]를 확인하시겠습니까? (y/N)> ");
+                  String answer = scanner.nextLine();
+
+                  if (answer.equalsIgnoreCase("y"))
+                  {
+                    // 휴가신청서 승인 할 때
+                    System.out.println("--------------------------------------------------------");
+                    System.out.println("[휴가신청서]");
+                    System.out.printf("사번 : %d\n", id[index]);
+                    System.out.printf("서명 : %s\n", name[index]);
+                    System.out.printf("부서 : %s\n", department[index]);
+                    System.out.printf("휴가종류 : %s\n", holiday[index]);
+                    System.out.printf("휴가날짜 : %s ~ %s\n", startDate[index], endDate[index]);
+                    System.out.printf("상기 %s(본인)은 %s로 인하여 휴가신청서를 제출하오니\n"
+                        + "허락하여 주시기 바랍니다.\n", name[index], holidayReason[index]);
+                    System.out.printf("[승인여부] : %s\n", holidayApproval[index]);
+                    System.out.println("--------------------------------------------------------");
+                    System.out.print("휴가신청을 승인하시겠습니까? (y/N)> ");
+                    answer = scanner.nextLine();
+
+                    if (answer.equalsIgnoreCase("y"))
+                    {
+                      System.out.println("승인하셨습니다.");
+                      holidayApproval[index] = "승인";
+                    } else
+                    {
+                      System.out.println("미승인하셨습니다.");
+                    }
+                  } else
+                  {
+                    System.out.println("휴가신청서를 확인하지 않습니다.");
+                  }
+
+                } else if (outCheck > 0)
+                {
+                  // 사직서만 있을 경우
+                  System.out.print("[사직서]를 확인하시겠습니까? (y/N)> ");
+                  String answer = scanner.nextLine();
+
+                  if (answer.equalsIgnoreCase("y"))
+                  {
+                    // 사직서 승인 할 때
+                    System.out.println("--------------------------------------------------------");
+                    System.out.println("[사직서]");
+                    System.out.printf("사번 : %d\n", id[index]);
+                    System.out.printf("서명 : %s\n", name[index]);
+                    System.out.printf("부서 : %s\n", department[index]);
+                    System.out.printf("입사날짜 : %s\n", joinDate[index]);
+                    System.out.printf("퇴사날짜 : %s\n", outDate[index]);
+                    System.out.printf("상기 %s(본인)은 %s로 인하여 사직서를 제출하오니\n"
+                        + "허락하여 주시기 바랍니다.\n", name[index], outReason[index]);
+                    System.out.printf("[승인여부] : %s\n", outApproval[index]);
+                    System.out.println("--------------------------------------------------------");
+                    System.out.print("사직서를 승인하시겠습니까? (y/N)> ");
+                    answer = scanner.nextLine();
+
+                    if (answer.equalsIgnoreCase("y"))
+                    {
+                      System.out.println("승인하셨습니다.");
+                      outApproval[index] = "승인";
+                    } else
+                    {
+                      System.out.println("미승인하셨습니다.");
+                    }
+                  } else
+                  {
+                    System.out.println("사직서를 확인하지 않습니다.");
+                  }
+
+                } // if
+
+                break;
+              } // while
+
 
               break;
 
