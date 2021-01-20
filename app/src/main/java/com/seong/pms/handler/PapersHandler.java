@@ -1,8 +1,11 @@
-package com.seong.pms;
+package com.seong.pms.handler;
+
+import com.seong.pms.App;
+import com.seong.util.Prompt;
 
 public class PapersHandler {
 
-  static void paperMenu() {
+  public static void paperMenu() {
     while (true)
     {
       Prompt.println("");
@@ -21,7 +24,7 @@ public class PapersHandler {
         // 승인된 문서가 있는지 검사하는 for
         for (int i = 0; i < WriteHandler.turn; i++)
         {
-          if (WriteHandler.holidayApproval[i].equals("미승인") && WriteHandler.outApproval[i].equals("미승인"))
+          if (WriteHandler.papers[i].holidayApproval.equals("미승인") && WriteHandler.papers[i].outApproval.equals("미승인"))
           {
             // 휴가신청서와 사직서의 승인여부가 '미승인'일때 check++
             check++;
@@ -45,8 +48,8 @@ public class PapersHandler {
         // 미승인 문서가 있는지 검사하는 for
         for (int i = 0; i < WriteHandler.turn; i++)
         {
-          if (WriteHandler.holidayReason[i] == null && WriteHandler.holidayApproval[i].equals("미승인")
-              && WriteHandler.outReason[i] == null && WriteHandler.outApproval[i].equals("미승인"))
+          if (WriteHandler.papers[i].holidayReason == null && WriteHandler.papers[i].holidayApproval.equals("미승인")
+              && WriteHandler.papers[i].outReason == null && WriteHandler.papers[i].outApproval.equals("미승인"))
           {
             // 휴가사유와 퇴사사유가 입력되지 않았고, 휴가승인과 퇴사승인이 안됬을 경우
             // => 직원의 기본정보만 입력된 상태
@@ -54,8 +57,8 @@ public class PapersHandler {
             check++;
           }
 
-          if (WriteHandler.holidayReason[i] != null && WriteHandler.holidayApproval[i].equals("승인")
-              && WriteHandler.outReason[i] != null && WriteHandler.outApproval[i].equals("승인"))
+          if (WriteHandler.papers[i].holidayReason != null && WriteHandler.papers[i].holidayApproval.equals("승인")
+              && WriteHandler.papers[i].outReason != null && WriteHandler.papers[i].outApproval.equals("승인"))
           {
             // 승인받아야할 문서(미승인문서)가 승인으로 바뀐 경우
             // => 휴가사유와 퇴사사유의 값이 입력되어있고 휴가승인과 퇴사승인이 된 상태
@@ -89,31 +92,31 @@ public class PapersHandler {
   }
 
 
-  static void allPaper() {
+  public static void allPaper() {
     Prompt.println("");
     Prompt.println("= 모든 문서 List =");
 
     for (int i = 0; i < WriteHandler.turn; i++)
     {
-      if (WriteHandler.name[i] != null)
+      if (WriteHandler.members[i].name != null)
       {
-        System.out.printf("- %s(%d)직원의 정보\n", WriteHandler.name[i], WriteHandler.id[i]);
+        System.out.printf("- %s(%d)직원의 정보\n", WriteHandler.members[i].name, WriteHandler.members[i].id);
 
-        if (WriteHandler.holidayReason[i] != null)
+        if (WriteHandler.papers[i].holidayReason != null)
         {
-          System.out.printf("- %s(%d)직원의 휴가신청서\n", WriteHandler.name[i], WriteHandler.id[i]);
+          System.out.printf("- %s(%d)직원의 휴가신청서\n", WriteHandler.members[i].name, WriteHandler.members[i].id);
         } // if
 
-        if (WriteHandler.outReason[i] != null)
+        if (WriteHandler.papers[i].outReason != null)
         {
-          System.out.printf("- %s(%d)직원의 사직서\n", WriteHandler.name[i], WriteHandler.id[i]);
+          System.out.printf("- %s(%d)직원의 사직서\n", WriteHandler.members[i].name, WriteHandler.members[i].id);
         } // if
       } // if
     } // for
   }
 
 
-  static void approvalPaper() {
+  public static void approvalPaper() {
     while (true)
     {
       Prompt.println("");
@@ -121,14 +124,14 @@ public class PapersHandler {
 
       for (int i = 0; i < WriteHandler.turn; i++)
       {
-        if (WriteHandler.holidayApproval[i].equals("승인"))
+        if (WriteHandler.papers[i].holidayApproval.equals("승인"))
         {
-          System.out.printf("- %s(%d)직원의 휴가신청서\n", WriteHandler.name[i], WriteHandler.id[i]);
+          System.out.printf("- %s(%d)직원의 휴가신청서\n", WriteHandler.members[i].name, WriteHandler.members[i].id);
         } // if
 
-        if (WriteHandler.outApproval[i].equals("승인"))
+        if (WriteHandler.papers[i].outApproval.equals("승인"))
         {
-          System.out.printf("- %s(%d)직원의 사직서\n", WriteHandler.name[i], WriteHandler.id[i]);
+          System.out.printf("- %s(%d)직원의 사직서\n", WriteHandler.members[i].name, WriteHandler.members[i].id);
         } // if
       } // for
 
@@ -144,22 +147,22 @@ public class PapersHandler {
       for (int i = 0; i < WriteHandler.turn; i++)
       {
         // 해당 직원이 있는지 검사 + 각 직원이 입력한 문서의 종류(개수)를 파악
-        if ((valuse.equalsIgnoreCase(WriteHandler.name[i]) && WriteHandler.holidayReason[i] != null && WriteHandler.holidayApproval[i].equals("승인"))
-            || (valuse.equals((i+1) + "") && WriteHandler.holidayReason[i] != null && WriteHandler.holidayApproval[i].equals("승인")))
+        if ((valuse.equalsIgnoreCase(WriteHandler.members[i].name) && WriteHandler.papers[i].holidayReason != null && WriteHandler.papers[i].holidayApproval.equals("승인"))
+            || (valuse.equals((i+1) + "") && WriteHandler.papers[i].holidayReason != null && WriteHandler.papers[i].holidayApproval.equals("승인")))
         {
           // 해당 직원이 있고, 승인된 휴가신청서가 있을 때
-          Prompt.println(WriteHandler.name[i] + "직원이 입력한 [휴가신청서]가 있습니다.");
+          Prompt.println(WriteHandler.members[i].name + "직원이 입력한 [휴가신청서]가 있습니다.");
 
           check++;
           holidayCheck++;
           index = i; // 현재 조건에 맞는 직원의 배열 인덱스 값을 저장
         } // if
 
-        if ((valuse.equalsIgnoreCase(WriteHandler.name[i]) && WriteHandler.outReason[i] != null && WriteHandler.outApproval[i].equals("승인"))
-            || (valuse.equals((i+1) + "") && WriteHandler.outReason[i] != null && WriteHandler.outApproval[i].equals("승인")))
+        if ((valuse.equalsIgnoreCase(WriteHandler.members[i].name) && WriteHandler.papers[i].outReason != null && WriteHandler.papers[i].outApproval.equals("승인"))
+            || (valuse.equals((i+1) + "") && WriteHandler.papers[i].outReason != null && WriteHandler.papers[i].outApproval.equals("승인")))
         {
           // 해당 직원이 있고, 승인된 사직서가 있을 때
-          Prompt.println(WriteHandler.name[i] + "직원이 입력한 [사직서]가 있습니다.");
+          Prompt.println(WriteHandler.members[i].name + "직원이 입력한 [사직서]가 있습니다.");
 
           check++;
           outCheck++;
@@ -232,7 +235,7 @@ public class PapersHandler {
   }
 
 
-  static void noneApprovalPaper() {
+  public static void noneApprovalPaper() {
     while(true)
     {
       Prompt.println("");
@@ -240,14 +243,14 @@ public class PapersHandler {
 
       for (int i = 0; i < WriteHandler.turn; i++)
       {
-        if (WriteHandler.holidayReason[i] != null && WriteHandler.holidayApproval[i].equals("미승인"))
+        if (WriteHandler.papers[i].holidayReason != null && WriteHandler.papers[i].holidayApproval.equals("미승인"))
         {
-          System.out.printf("- %s(%d)직원의 휴가신청서\n", WriteHandler.name[i], WriteHandler.id[i]);
+          System.out.printf("- %s(%d)직원의 휴가신청서\n", WriteHandler.members[i].name, WriteHandler.members[i].id);
         } // if
 
-        if (WriteHandler.outReason[i] != null &&  WriteHandler.outApproval[i].equals("미승인"))
+        if (WriteHandler.papers[i].outReason != null &&  WriteHandler.papers[i].outApproval.equals("미승인"))
         {
-          System.out.printf("- %s(%d)직원의 사직서\n", WriteHandler.name[i], WriteHandler.id[i]);
+          System.out.printf("- %s(%d)직원의 사직서\n", WriteHandler.members[i].name, WriteHandler.members[i].id);
         } // if
       } // for
 
@@ -263,22 +266,22 @@ public class PapersHandler {
       for (int i = 0; i < WriteHandler.turn; i++)
       {
         // 해당 직원이 있는지 검사 + 각 직원이 입력한 문서의 종류(개수)를 파악
-        if ((valuse.equalsIgnoreCase(WriteHandler.name[i]) && WriteHandler.holidayReason[i] != null && WriteHandler.holidayApproval[i].equals("미승인"))
-            || (valuse.equals((i+1) + "") && WriteHandler.holidayReason[i] != null && WriteHandler.holidayApproval[i].equals("미승인")))
+        if ((valuse.equalsIgnoreCase(WriteHandler.members[i].name) && WriteHandler.papers[i].holidayReason != null && WriteHandler.papers[i].holidayApproval.equals("미승인"))
+            || (valuse.equals((i+1) + "") && WriteHandler.papers[i].holidayReason != null && WriteHandler.papers[i].holidayApproval.equals("미승인")))
         {
           // 해당 직원이 있고, 미승인된 휴가신청서가 있을 때
-          Prompt.println(WriteHandler.name[i] + "직원이 입력한 [휴가신청서]가 있습니다.");
+          Prompt.println(WriteHandler.members[i].name + "직원이 입력한 [휴가신청서]가 있습니다.");
 
           check++;
           holidayCheck++;
           index = i; // 현재 조건에 맞는 직원의 배열 인덱스 값을 저장
         } // if
 
-        if ((valuse.equalsIgnoreCase(WriteHandler.name[i]) && WriteHandler.outReason[i] != null && WriteHandler.outApproval[i].equals("미승인"))
-            || (valuse.equals((i+1) + "") && WriteHandler.outReason[i] != null && WriteHandler.outApproval[i].equals("미승인")))
+        if ((valuse.equalsIgnoreCase(WriteHandler.members[i].name) && WriteHandler.papers[i].outReason != null && WriteHandler.papers[i].outApproval.equals("미승인"))
+            || (valuse.equals((i+1) + "") && WriteHandler.papers[i].outReason != null && WriteHandler.papers[i].outApproval.equals("미승인")))
         {
           // 해당 직원이 있고, 미승인된 사직서가 있을 때
-          Prompt.println(WriteHandler.name[i] + "직원이 입력한 [사직서]가 있습니다.");
+          Prompt.println(WriteHandler.members[i].name + "직원이 입력한 [사직서]가 있습니다.");
 
           check++;
           outCheck++;
@@ -309,7 +312,7 @@ public class PapersHandler {
             if (answer.equalsIgnoreCase("y"))
             {
               Prompt.println("승인하셨습니다.");
-              WriteHandler.holidayApproval[index] = "승인";
+              WriteHandler.papers[index].holidayApproval = "승인";
             } else
             {
               Prompt.println("미승인하셨습니다.");
@@ -325,7 +328,7 @@ public class PapersHandler {
             if (answer.equalsIgnoreCase("y"))
             {
               Prompt.println("승인하셨습니다.");
-              WriteHandler.outApproval[index] = "승인";
+              WriteHandler.papers[index].outApproval = "승인";
             } else
             {
               Prompt.println("미승인하셨습니다.");
@@ -351,7 +354,7 @@ public class PapersHandler {
             if (answer.equalsIgnoreCase("y"))
             {
               Prompt.println("승인하셨습니다.");
-              WriteHandler.holidayApproval[index] = "승인";
+              WriteHandler.papers[index].holidayApproval = "승인";
             } else
             {
               Prompt.println("미승인하셨습니다.");
@@ -375,7 +378,7 @@ public class PapersHandler {
             if (answer.equalsIgnoreCase("y"))
             {
               Prompt.println("승인하셨습니다.");
-              WriteHandler.outApproval[index] = "승인";
+              WriteHandler.papers[index].outApproval = "승인";
             } else
             {
               Prompt.println("미승인하셨습니다.");

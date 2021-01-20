@@ -1,8 +1,29 @@
-package com.seong.pms;
+package com.seong.pms.handler;
 
 import java.sql.Date;
+import com.seong.pms.App;
+import com.seong.util.Prompt;
 
 public class WriteHandler {
+
+  public static class Member {
+    public int id; // 직원번호
+    public String name; // 직원이름
+    public int age; // 직원나이
+    public String department; // 부서
+    public Date joinDate; // 입사날짜
+  }
+
+  public static class Paper {
+    public String holiday; // 휴가종류
+    public Date startDate; // 휴가시작날짜
+    public Date endDate; // 휴가끝나는날짜
+    public String holidayReason; // 휴가사유
+    public String holidayApproval; // 휴가승인여부
+    public Date outDate; // 퇴사날짜
+    public String outReason; // 퇴사사유
+    public String outApproval; // 퇴사승인여부
+  }
 
   static final int SIZE = 5;
 
@@ -10,31 +31,29 @@ public class WriteHandler {
   static boolean write = true;
   static int turn = 0; // 배열인덱스
 
-  static int[] id = new int[SIZE]; // 직원번호
-  static String[] name = new String[SIZE]; // 직원이름
-  static int[] age = new int[SIZE]; // 직원나이
-  static String[] department = new String[SIZE]; // 부서
-  static Date[] joinDate = new Date[SIZE]; // 입사날짜
+  public static Member[] members = new Member[SIZE];
+  public static Paper[] papers = new Paper[SIZE];
 
-  static String[] holiday = new String[SIZE]; // 휴가종류
-  static Date[] startDate = new Date[SIZE]; // 휴가시작날짜
-  static Date[] endDate = new Date[SIZE]; // 휴가끝나는날짜
-  static String[] holidayReason = new String[SIZE]; // 휴가사유
-  static String[] holidayApproval = new String[SIZE]; // 휴가승인여부
-  static Date[] outDate = new Date[SIZE]; // 퇴사날짜
-  static String[] outReason = new String[SIZE]; // 퇴사사유
-  static String[] outApproval = new String[SIZE]; // 퇴사승인여부
 
-  static void approval() {
+
+
+
+  public static void approval() {
     for (int i = 0; i < SIZE; i++)
     {
-      holidayApproval[i] = "미승인";
-      outApproval[i] = "미승인";
+      members[i] = new Member();
+      papers[i] = new Paper();
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+      papers[i].holidayApproval = "미승인";
+      papers[i].outApproval = "미승인";
     }
   }
 
 
-  static void writeMenu() {
+  public static void writeMenu() {
     while (write)
     {
       Prompt.println("");
@@ -79,10 +98,12 @@ public class WriteHandler {
     Prompt.println("");
     Prompt.println("직원정보 입력을 시작합니다.");
 
-    id[turn] = ++employeeNo;
-    name[turn] = Prompt.inputString("이름> ");
-    age[turn] = Prompt.inputInt("나이> ");
-    joinDate[turn] = Prompt.nextDate("입사날짜(yyyy-MM-dd)> ");
+    Member m = new Member();
+
+    m.id = ++employeeNo;
+    m.name = Prompt.inputString("이름> ");
+    m.age = Prompt.inputInt("나이> ");
+    m.joinDate = Prompt.nextDate("입사날짜(yyyy-MM-dd)> ");
 
     while (true)
     {
@@ -91,13 +112,13 @@ public class WriteHandler {
       switch(userChoice)
       {
         case 1 :
-          department[turn] = "개발팀";
+          m.department = "개발팀";
           break;
         case 2 :
-          department[turn] = "디자인팀";
+          m.department = "디자인팀";
           break;
         case 3 :
-          department[turn] = "마케팅팀";
+          m.department = "마케팅팀";
           break;
         default :
           Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");
@@ -111,16 +132,16 @@ public class WriteHandler {
 
     } // while
 
-    System.out.printf("%s직원의 정보가 입력되었습니다.\n", name[turn]);
+    System.out.printf("%s직원의 정보가 입력되었습니다.\n", m.name);
 
-    turn++;
+    members[turn++] = m;
   }
 
 
   static void addPaper(int menu) {
     while (true)
     {
-      if (name[0] == null)
+      if (members[0].name == null)
       {
         Prompt.println("저장된 직원이 없습니다. 직원의 정보를 먼저 입력해주세요.");
         break;
@@ -132,7 +153,7 @@ public class WriteHandler {
       for (int i = 0; i < turn; i++)
       {
         // 입력된 직원 보여주기
-        System.out.printf("- %s(%d)\n", name[i], id[i]);
+        System.out.printf("- %s(%d)\n", members[i].name, members[i].id);
       }
       String valuse = Prompt.inputString("0. 뒤로가기\n99. 종료\n> ");
 
@@ -156,29 +177,29 @@ public class WriteHandler {
       for (int i = 0; i < turn; i++)
       {
         // 해당 직원이 있는지 검사
-        if (valuse.equalsIgnoreCase(name[i]) || valuse.equals((i+1) + ""))
+        if (valuse.equalsIgnoreCase(members[i].name) || valuse.equals((i+1) + ""))
         {
           // 해당 직원이 있을 때
           if (menu == 2)
           {
             // 휴가신청서 
             Prompt.println("");
-            System.out.printf("%s직원의 휴가신청서를 입력을 시작합니다.\n", name[i]);
+            System.out.printf("%s직원의 휴가신청서를 입력을 시작합니다.\n", members[i].name);
             int userChoice = Prompt.inputInt("휴가종류(1. 연차 2. 반차 3. 병가 4. 경조)> ");
 
             switch (userChoice)
             {
               case 1 :
-                holiday[i] = "연차";
+                papers[i].holiday = "연차";
                 break;
               case 2 :
-                holiday[i] = "반차";
+                papers[i].holiday = "반차";
                 break;
               case 3 :
-                holiday[i] = "병가";
+                papers[i].holiday = "병가";
                 break;
               case 4 :
-                holiday[i] = "경조";
+                papers[i].holiday = "경조";
                 break;
               default :
                 Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");
@@ -187,21 +208,21 @@ public class WriteHandler {
                 continue;
             } // switch
 
-            startDate[i] = Prompt.nextDate("휴가 시작 날짜(yyyy-MM-dd)> ");
-            endDate[i] = Prompt.nextDate("휴가 마지막 날짜(yyyy-MM-dd)> ");
-            holidayReason[i] = Prompt.inputString("사유> ");
+            papers[i].startDate = Prompt.nextDate("휴가 시작 날짜(yyyy-MM-dd)> ");
+            papers[i].endDate = Prompt.nextDate("휴가 마지막 날짜(yyyy-MM-dd)> ");
+            papers[i].holidayReason = Prompt.inputString("사유> ");
 
-            System.out.printf("%s직원의 휴가신청서가 작성되었습니다.\n", name[i]);
+            System.out.printf("%s직원의 휴가신청서가 작성되었습니다.\n", members[i].name);
 
           } else 
           {
             // 사직서
             Prompt.println("");
-            System.out.printf("%s직원의 사직서를 입력을 시작합니다.\n", name[i]);
-            outDate[i] = Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> ");
-            outReason[i] = Prompt.inputString("퇴사사유> ");
+            System.out.printf("%s직원의 사직서를 입력을 시작합니다.\n", members[i].name);
+            papers[i].outDate = Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> ");
+            papers[i].outReason = Prompt.inputString("퇴사사유> ");
 
-            System.out.printf("%s직원의 사직서가 작성되었습니다.\n", name[i]);
+            System.out.printf("%s직원의 사직서가 작성되었습니다.\n", members[i].name);
           } // if
 
           check = 1;

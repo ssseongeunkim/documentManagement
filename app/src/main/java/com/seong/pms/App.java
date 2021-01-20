@@ -3,9 +3,13 @@
  */
 package com.seong.pms;
 
+import com.seong.pms.handler.PapersHandler;
+import com.seong.pms.handler.WriteHandler;
+import com.seong.util.Prompt;
+
 public class App {
 
-  static boolean company = true;
+  public static boolean company = true;
 
   public static void main(String[] args) {
 
@@ -23,7 +27,7 @@ public class App {
       } else if (menu == 2) 
       {
         // 서류목록
-        if (WriteHandler.name[0] == null)
+        if (WriteHandler.members[0].name == null)
         {
           Prompt.println("작성된 문서가 없습니다.");
           Prompt.println("");
