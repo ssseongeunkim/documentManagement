@@ -13,7 +13,10 @@ public class App {
 
   public static void main(String[] args) {
 
-    WriteHandler.approval();
+    WriteHandler writeHandler = new WriteHandler();
+    PapersHandler papersHandler = new PapersHandler();
+
+    writeHandler.approval();
 
     while (company)
     {
@@ -22,19 +25,19 @@ public class App {
       if (menu == 1)
       {
         // 서류작성메뉴 반복
-        WriteHandler.writeMenu();
+        writeHandler.writeMenu();
 
       } else if (menu == 2) 
       {
         // 서류목록
-        if (WriteHandler.members[0].name == null)
+        if (writeHandler.members[0].name == null)
         {
           Prompt.println("작성된 문서가 없습니다.");
           Prompt.println("");
           continue;
         }
 
-        PapersHandler.paperMenu();
+        papersHandler.paperMenu(writeHandler);
 
       } else if (menu == 99)
       {

@@ -1,29 +1,30 @@
 package com.seong.pms.handler;
 
-import java.sql.Date;
 import com.seong.pms.App;
+import com.seong.pms.domain.Member;
+import com.seong.pms.domain.Paper;
 import com.seong.util.Prompt;
 
 public class WriteHandler {
 
-  public static class Member {
-    public int id; // 직원번호
-    public String name; // 직원이름
-    public int age; // 직원나이
-    public String department; // 부서
-    public Date joinDate; // 입사날짜
-  }
+  //  public static class Member {
+  //    public int id; // 직원번호
+  //    public String name; // 직원이름
+  //    public int age; // 직원나이
+  //    public String department; // 부서
+  //    public Date joinDate; // 입사날짜
+  //  }
 
-  public static class Paper {
-    public String holiday; // 휴가종류
-    public Date startDate; // 휴가시작날짜
-    public Date endDate; // 휴가끝나는날짜
-    public String holidayReason; // 휴가사유
-    public String holidayApproval; // 휴가승인여부
-    public Date outDate; // 퇴사날짜
-    public String outReason; // 퇴사사유
-    public String outApproval; // 퇴사승인여부
-  }
+  //  public static class Paper {
+  //    public String holiday; // 휴가종류
+  //    public Date startDate; // 휴가시작날짜
+  //    public Date endDate; // 휴가끝나는날짜
+  //    public String holidayReason; // 휴가사유
+  //    public String holidayApproval; // 휴가승인여부
+  //    public Date outDate; // 퇴사날짜
+  //    public String outReason; // 퇴사사유
+  //    public String outApproval; // 퇴사승인여부
+  //  }
 
   static final int SIZE = 5;
 
@@ -31,29 +32,29 @@ public class WriteHandler {
   static boolean write = true;
   static int turn = 0; // 배열인덱스
 
-  public static Member[] members = new Member[SIZE];
-  public static Paper[] papers = new Paper[SIZE];
+  public Member[] members = new Member[SIZE];
+  public Paper[] papers = new Paper[SIZE];
 
 
 
 
 
-  public static void approval() {
+  public void approval() {
     for (int i = 0; i < SIZE; i++)
     {
-      members[i] = new Member();
-      papers[i] = new Paper();
+      this.members[i] = new Member();
+      this.papers[i] = new Paper();
     }
 
     for (int i = 0; i < SIZE; i++)
     {
-      papers[i].holidayApproval = "미승인";
-      papers[i].outApproval = "미승인";
+      this.papers[i].holidayApproval = "미승인";
+      this.papers[i].outApproval = "미승인";
     }
   }
 
 
-  public static void writeMenu() {
+  public void writeMenu() {
     while (write)
     {
       Prompt.println("");
@@ -94,7 +95,7 @@ public class WriteHandler {
   }
 
 
-  static void addMember() {
+  void addMember() {
     Prompt.println("");
     Prompt.println("직원정보 입력을 시작합니다.");
 
@@ -134,14 +135,14 @@ public class WriteHandler {
 
     System.out.printf("%s직원의 정보가 입력되었습니다.\n", m.name);
 
-    members[turn++] = m;
+    this.members[turn++] = m;
   }
 
 
-  static void addPaper(int menu) {
+  void addPaper(int menu) {
     while (true)
     {
-      if (members[0].name == null)
+      if (this.members[0].name == null)
       {
         Prompt.println("저장된 직원이 없습니다. 직원의 정보를 먼저 입력해주세요.");
         break;
@@ -153,7 +154,7 @@ public class WriteHandler {
       for (int i = 0; i < turn; i++)
       {
         // 입력된 직원 보여주기
-        System.out.printf("- %s(%d)\n", members[i].name, members[i].id);
+        System.out.printf("- %s(%d)\n", this.members[i].name, this.members[i].id);
       }
       String valuse = Prompt.inputString("0. 뒤로가기\n99. 종료\n> ");
 
@@ -177,29 +178,29 @@ public class WriteHandler {
       for (int i = 0; i < turn; i++)
       {
         // 해당 직원이 있는지 검사
-        if (valuse.equalsIgnoreCase(members[i].name) || valuse.equals((i+1) + ""))
+        if (valuse.equalsIgnoreCase(this.members[i].name) || valuse.equals((i+1) + ""))
         {
           // 해당 직원이 있을 때
           if (menu == 2)
           {
             // 휴가신청서 
             Prompt.println("");
-            System.out.printf("%s직원의 휴가신청서를 입력을 시작합니다.\n", members[i].name);
+            System.out.printf("%s직원의 휴가신청서를 입력을 시작합니다.\n", this.members[i].name);
             int userChoice = Prompt.inputInt("휴가종류(1. 연차 2. 반차 3. 병가 4. 경조)> ");
 
             switch (userChoice)
             {
               case 1 :
-                papers[i].holiday = "연차";
+                this.papers[i].holiday = "연차";
                 break;
               case 2 :
-                papers[i].holiday = "반차";
+                this.papers[i].holiday = "반차";
                 break;
               case 3 :
-                papers[i].holiday = "병가";
+                this.papers[i].holiday = "병가";
                 break;
               case 4 :
-                papers[i].holiday = "경조";
+                this.papers[i].holiday = "경조";
                 break;
               default :
                 Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");
@@ -208,21 +209,21 @@ public class WriteHandler {
                 continue;
             } // switch
 
-            papers[i].startDate = Prompt.nextDate("휴가 시작 날짜(yyyy-MM-dd)> ");
-            papers[i].endDate = Prompt.nextDate("휴가 마지막 날짜(yyyy-MM-dd)> ");
-            papers[i].holidayReason = Prompt.inputString("사유> ");
+            this.papers[i].startDate = Prompt.nextDate("휴가 시작 날짜(yyyy-MM-dd)> ");
+            this.papers[i].endDate = Prompt.nextDate("휴가 마지막 날짜(yyyy-MM-dd)> ");
+            this.papers[i].holidayReason = Prompt.inputString("사유> ");
 
-            System.out.printf("%s직원의 휴가신청서가 작성되었습니다.\n", members[i].name);
+            System.out.printf("%s직원의 휴가신청서가 작성되었습니다.\n", this.members[i].name);
 
           } else 
           {
             // 사직서
             Prompt.println("");
-            System.out.printf("%s직원의 사직서를 입력을 시작합니다.\n", members[i].name);
-            papers[i].outDate = Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> ");
-            papers[i].outReason = Prompt.inputString("퇴사사유> ");
+            System.out.printf("%s직원의 사직서를 입력을 시작합니다.\n", this.members[i].name);
+            this.papers[i].outDate = Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> ");
+            this.papers[i].outReason = Prompt.inputString("퇴사사유> ");
 
-            System.out.printf("%s직원의 사직서가 작성되었습니다.\n", members[i].name);
+            System.out.printf("%s직원의 사직서가 작성되었습니다.\n",this. members[i].name);
           } // if
 
           check = 1;
@@ -240,6 +241,9 @@ public class WriteHandler {
       break;
     } // while
   }
+
+
+
 
 
 }
