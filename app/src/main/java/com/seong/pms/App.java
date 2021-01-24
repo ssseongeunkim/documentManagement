@@ -3,9 +3,9 @@
  */
 package com.seong.pms;
 
-import com.seong.pms.handler.ListHandler;
+import com.seong.pms.handler.ListMenuHandler;
 import com.seong.pms.handler.MemberHandler;
-import com.seong.pms.handler.WriteHandler;
+import com.seong.pms.handler.WriteMenuHandler;
 import com.seong.util.Prompt;
 
 public class App {
@@ -14,21 +14,21 @@ public class App {
 
   public static void main(String[] args) {
 
-    WriteHandler writeHandler = new WriteHandler();
-    ListHandler listHandler = new ListHandler();
+    WriteMenuHandler writeHandler = new WriteMenuHandler();
+    ListMenuHandler listHandler = new ListMenuHandler();
 
     writeHandler.approval();
 
     while (company)
     {
-      int menu = Prompt.inputInt("[문서관리 시스템]\n1. 서류작성\n2. 서류목록\n99. 종료\n> ");
+      String menu = Prompt.inputString("[문서관리 시스템]\n1. 서류작성\n2. 서류목록\n99. 종료\n> ");
 
-      if (menu == 1)
+      if (menu.equals("1"))
       {
         // 서류작성메뉴
         writeHandler.writeMenu();
 
-      } else if (menu == 2) 
+      } else if (menu.equals("2")) 
       {
         // 서류목록
         if (MemberHandler.members[0].name == null)
@@ -40,12 +40,15 @@ public class App {
 
         listHandler.paperMenu();
 
-      } else if (menu == 99)
+      } else if (menu.equals("99"))
       {
         // 종료
         Prompt.println("시스템을 종료합니다.");
 
         break;
+      } else if (Prompt.inputCheck(menu))
+      {
+        Prompt.println("입력형식이 맞지 않습니다. 숫자만 입력해 주세요.");
       } else
       {
         Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");

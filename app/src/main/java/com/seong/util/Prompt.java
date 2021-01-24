@@ -31,5 +31,19 @@ public class Prompt {
     scanner.close();
   }
 
+  public static boolean inputCheck(String menu) {
+    String outMenu = menu.replaceAll("[^0-9]", ".");
+
+    for (int i = 0; i < outMenu.length(); i++)
+    {
+      if (outMenu.charAt(i) == '.')
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
 
 }

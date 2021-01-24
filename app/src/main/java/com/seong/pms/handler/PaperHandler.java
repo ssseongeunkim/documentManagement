@@ -11,7 +11,7 @@ public class PaperHandler {
   static Paper[] papers = new Paper[SIZE];
   MemberHandler memberHandler = new MemberHandler();
 
-  void add(int menu) {
+  void add(String menu) {
     while (true)
     {
       if (MemberHandler.members[0].name == null)
@@ -39,7 +39,7 @@ public class PaperHandler {
       {
         // 종료
         Prompt.println("시스템을 종료합니다.");
-        WriteHandler.write = false; // 서류작성 while 종료
+        WriteMenuHandler.write = false; // 서류작성 while 종료
         App.company = false; // 시스템 while 종료
         break;
       } // if
@@ -54,7 +54,7 @@ public class PaperHandler {
         continue; // 현재 while 문을 반복하기 위해 아래 break를 건너뜀
       } else
       {
-        if (menu == 2)
+        if (menu.equals("2"))
         {
           // 휴가신청서 
           Prompt.println("");
@@ -99,6 +99,7 @@ public class PaperHandler {
         } else 
         {
           // 사직서
+          Prompt.println("");
           System.out.printf("%s직원의 사직서를 입력을 시작합니다.\n", MemberHandler.members[checkIndex].name);
           papers[checkIndex].outDate = Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> ");
           papers[checkIndex].outReason = Prompt.inputString("퇴사사유> ");
@@ -115,7 +116,7 @@ public class PaperHandler {
   int exist() {
     for (int i = 0; i < MemberHandler.turn; i++)
     {
-      if (PaperHandler.papers[i].holidayApproval.equals("승인") || PaperHandler.papers[i].outApproval.equals("승인"))
+      if (PaperHandler.papers[i].holidayOk.equals("승인") || PaperHandler.papers[i].outOk.equals("승인"))
       {
         return i;
       } // if
@@ -127,8 +128,8 @@ public class PaperHandler {
   int noneApprovalExist() {
     for (int i = 0; i < MemberHandler.turn; i++)
     {
-      if ((PaperHandler.papers[i].holidayReason != null && PaperHandler.papers[i].holidayApproval.equals("미승인"))
-          || (PaperHandler.papers[i].outReason != null && PaperHandler.papers[i].outApproval.equals("미승인")))
+      if ((PaperHandler.papers[i].holidayReason != null && PaperHandler.papers[i].holidayOk.equals("미승인"))
+          || (PaperHandler.papers[i].outReason != null && PaperHandler.papers[i].outOk.equals("미승인")))
       {
         return i;
       }

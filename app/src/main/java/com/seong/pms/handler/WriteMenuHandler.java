@@ -5,7 +5,7 @@ import com.seong.pms.domain.Member;
 import com.seong.pms.domain.Paper;
 import com.seong.util.Prompt;
 
-public class WriteHandler {
+public class WriteMenuHandler {
 
   static final int SIZE = 5;
 
@@ -19,19 +19,18 @@ public class WriteHandler {
     {
       MemberHandler.members[i] = new Member();
       PaperHandler.papers[i] = new Paper();
-      PaperHandler.papers[i].holidayApproval = "미승인";
-      PaperHandler.papers[i].outApproval = "미승인";
+      PaperHandler.papers[i].holidayOk = "미승인";
+      PaperHandler.papers[i].outOk = "미승인";
     }
   }
-
 
   public void writeMenu() {
     while (write)
     {
       Prompt.println("");
-      int menu = Prompt.inputInt("=> 서류작성 메뉴입니다. <=\n1. 직원정보\n2. 휴가신청서\n3. 사직서\n0. 뒤로가기\n99. 종료\n> ");
+      String menu = Prompt.inputString("=> 서류작성 메뉴입니다. <=\n1. 직원정보\n2. 휴가신청서\n3. 사직서\n0. 뒤로가기\n99. 종료\n> ");
 
-      if (menu == 1)
+      if (menu.equals("1"))
       {
         // 회사원 정보 입력
         if (MemberHandler.turn == SIZE)
@@ -42,22 +41,25 @@ public class WriteHandler {
 
         memberHandler.add();
 
-      } else if (menu == 2 || menu == 3)
+      } else if (menu.equals("2") || menu.equals("3"))
       {
         // 휴가신청서, 사직서
         paperHandler.add(menu);
 
-      } else if (menu == 0)
+      } else if (menu.equals("0"))
       {
         // 뒤로가기
         Prompt.println("뒤로갑니다.");
         break;
-      } else if (menu == 99)
+      } else if (menu.equals("99"))
       {
         // 종료
         Prompt.println("시스템을 종료합니다.");
         App.company = false; // 시스템 while 종료
         break;
+      } else if (Prompt.inputCheck(menu))
+      {
+        Prompt.println("입력형식이 맞지 않습니다. 숫자만 입력해 주세요.");
       } else
       {
         Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");
