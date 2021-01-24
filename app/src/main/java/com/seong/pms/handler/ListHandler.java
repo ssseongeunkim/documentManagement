@@ -230,7 +230,19 @@ public class ListHandler {
         } // if
       } // for
 
-      String valuse = Prompt.inputString("승인된 문서의 작성자 사번 또는 이름을 입력하세요.> ");
+      String valuse = Prompt.inputString("승인된 문서의 작성자 사번 또는 이름을 입력하세요.\n0. 뒤로가기\n99. 종료\n> ");
+
+      if (valuse.equals("0"))
+      {
+        Prompt.println("뒤로 갑니다.");
+        break;
+      } else if (valuse.equals("99"))
+      {
+        Prompt.println("시스템을 종료합니다.");
+        paper = false; // 서류작성 while 종료
+        App.company = false; // 시스템 while 종료
+        break;
+      }
 
       int holidayCheck = 0;
       int outCheck = 0;
@@ -334,7 +346,19 @@ public class ListHandler {
         } // if
       } // for
 
-      String valuse = Prompt.inputString("승인할 문서의 작성자 사번 또는 이름을 입력하세요.> ");
+      String valuse = Prompt.inputString("승인할 문서의 작성자 사번 또는 이름을 입력하세요.\n0. 뒤로가기\n99. 종료\n> ");
+
+      if (valuse.equals("0"))
+      {
+        Prompt.println("뒤로 갑니다.");
+        break;
+      } else if (valuse.equals("99"))
+      {
+        Prompt.println("시스템을 종료합니다.");
+        paper = false; // 서류작성 while 종료
+        App.company = false; // 시스템 while 종료
+        break;
+      }
 
       int holidayCheck = 0;
       int outCheck = 0;
