@@ -3,7 +3,8 @@
  */
 package com.seong.pms;
 
-import com.seong.pms.handler.PapersHandler;
+import com.seong.pms.handler.ListHandler;
+import com.seong.pms.handler.MemberHandler;
 import com.seong.pms.handler.WriteHandler;
 import com.seong.util.Prompt;
 
@@ -14,7 +15,7 @@ public class App {
   public static void main(String[] args) {
 
     WriteHandler writeHandler = new WriteHandler();
-    PapersHandler papersHandler = new PapersHandler();
+    ListHandler listHandler = new ListHandler();
 
     writeHandler.approval();
 
@@ -24,25 +25,26 @@ public class App {
 
       if (menu == 1)
       {
-        // 서류작성메뉴 반복
+        // 서류작성메뉴
         writeHandler.writeMenu();
 
       } else if (menu == 2) 
       {
         // 서류목록
-        if (writeHandler.members[0].name == null)
+        if (MemberHandler.members[0].name == null)
         {
           Prompt.println("작성된 문서가 없습니다.");
           Prompt.println("");
           continue;
         }
 
-        papersHandler.paperMenu(writeHandler);
+        listHandler.paperMenu();
 
       } else if (menu == 99)
       {
         // 종료
         Prompt.println("시스템을 종료합니다.");
+
         break;
       } else
       {
