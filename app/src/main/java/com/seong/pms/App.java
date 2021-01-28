@@ -17,8 +17,6 @@ public class App {
     WriteMenuHandler writeHandler = new WriteMenuHandler();
     ListMenuHandler listHandler = new ListMenuHandler();
 
-    writeHandler.approval();
-
     while (company)
     {
       String menu = Prompt.inputString("[문서관리 시스템]\n1. 서류작성\n2. 서류목록\n99. 종료\n> ");

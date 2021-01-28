@@ -9,7 +9,11 @@ public class PaperHandler {
   static final int SIZE = 5;
 
   static Paper[] papers = new Paper[SIZE];
-  MemberHandler memberHandler = new MemberHandler();
+  MemberHandler memberHandler;
+
+  public PaperHandler(MemberHandler memberHandler) {
+    this.memberHandler = memberHandler;
+  }
 
   void add(String menu) {
     while (true)

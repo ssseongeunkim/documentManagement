@@ -7,8 +7,9 @@ public class ListMenuHandler {
 
   static boolean paper = true;
 
-  PaperHandler paperHandler = new PaperHandler();
-  SelectPaperHandler selectPaperHandler = new SelectPaperHandler();
+  MemberHandler memberHandler = new MemberHandler();
+  PaperHandler paperHandler = new PaperHandler(memberHandler);
+  SelectPaperHandler selectPaperHandler = new SelectPaperHandler(memberHandler);
 
   public void paperMenu() {
     while (paper)

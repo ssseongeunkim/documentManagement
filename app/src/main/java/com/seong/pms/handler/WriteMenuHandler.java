@@ -12,9 +12,9 @@ public class WriteMenuHandler {
   static boolean write = true;
 
   MemberHandler memberHandler = new MemberHandler();
-  PaperHandler paperHandler = new PaperHandler();
+  PaperHandler paperHandler = new PaperHandler(memberHandler);
 
-  public void approval() {
+  public WriteMenuHandler() {
     for (int i = 0; i < SIZE; i++)
     {
       MemberHandler.members[i] = new Member();

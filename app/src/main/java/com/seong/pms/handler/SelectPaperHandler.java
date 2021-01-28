@@ -7,6 +7,10 @@ public class SelectPaperHandler {
 
   MemberHandler memberHandler = new MemberHandler();
 
+  public SelectPaperHandler(MemberHandler memberHandler) {
+    this.memberHandler = memberHandler;
+  }
+
   void allPaper() {
     while (true)
     {
