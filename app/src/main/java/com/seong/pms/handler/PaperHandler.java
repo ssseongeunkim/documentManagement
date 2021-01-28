@@ -18,7 +18,7 @@ public class PaperHandler {
   void add(String menu) {
     while (true)
     {
-      if (MemberHandler.members[0].name == null)
+      if (MemberHandler.members[0] == null)
       {
         Prompt.println("저장된 직원이 없습니다. 직원의 정보를 먼저 입력해주세요.");
         break;

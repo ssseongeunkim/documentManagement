@@ -1,7 +1,6 @@
 package com.seong.pms.handler;
 
 import com.seong.pms.App;
-import com.seong.pms.domain.Member;
 import com.seong.pms.domain.Paper;
 import com.seong.util.Prompt;
 
@@ -17,7 +16,7 @@ public class WriteMenuHandler {
   public WriteMenuHandler() {
     for (int i = 0; i < SIZE; i++)
     {
-      MemberHandler.members[i] = new Member();
+      //      MemberHandler.members[i] = new Member();
       PaperHandler.papers[i] = new Paper();
       PaperHandler.papers[i].holidayOk = "미승인";
       PaperHandler.papers[i].outOk = "미승인";
