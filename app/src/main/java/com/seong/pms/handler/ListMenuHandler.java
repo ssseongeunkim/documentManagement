@@ -7,15 +7,31 @@ public class ListMenuHandler {
 
   static boolean paper = true;
 
-  MemberHandler memberHandler = new MemberHandler();
-  PaperHandler paperHandler = new PaperHandler(memberHandler);
-  SelectPaperHandler selectPaperHandler = new SelectPaperHandler(memberHandler);
+  //  private MemberHandler memberHandler = new MemberHandler();
+  //  private PaperHandler paperHandler = new PaperHandler(memberHandler);
+  //  private SelectPaperHandler selectPaperHandler = new SelectPaperHandler(this.memberHandler, this.paperHandler);
+
+  private MemberHandler memberHandler;
+  private PaperHandler paperHandler;
+  private SelectPaperHandler selectPaperHandler;
+
+  public ListMenuHandler(MemberHandler memberHandler, PaperHandler paperHandler) {
+    this.memberHandler = memberHandler;
+    this.paperHandler = paperHandler;
+    this.selectPaperHandler = new SelectPaperHandler(this.memberHandler, this.paperHandler);
+  }
+
+  //  public ListMenuHandler(MemberHandler memberHandler, PaperHandler paperHandler) {
+  //    this.memberHandler = memberHandler;
+  //    this.paperHandler = paperHandler;
+  //    this.selectPaperHandler = new SelectPaperHandler(this.memberHandler, this.paperHandler);
+  //  }
 
   public void paperMenu() {
     while (paper)
     {
       Prompt.println("");
-      String menu = Prompt.inputString("=> 서류목록 메뉴입니다. <=\n1. 모든 문서 List\n2. 승인 된 문서 List\n3. 미승인 문서 List\n0. 뒤로가기\n99. 종료\n> ");
+      String menu = Prompt.inputString("[문서관리 시스템 / 서류목록]\n1. 모든 문서 List\n2. 승인 된 문서 List\n3. 미승인 문서 List\n0. 뒤로가기\n99. 종료\n> ");
 
       if (menu.equals("1"))
       {
@@ -25,31 +41,31 @@ public class ListMenuHandler {
       } else if (menu.equals("2"))
       {
         // 승인 된 문서 리스트
-        int check = paperHandler.exist();
-
-        if (-1 < check)
-        {
-          selectPaperHandler.approvalPaper();
-        } else
-        {
-          Prompt.println("승인된 문서가 없습니다.");
-
-          continue;
-        }
+        //        int check = paperHandler.exist();
+        //
+        //        if (-1 < check)
+        //        {
+        //          selectPaperHandler.approvalPaper();
+        //        } else
+        //        {
+        //          Prompt.println("승인된 문서가 없습니다.");
+        //
+        //          continue;
+        //        }
       } else if (menu.equals("3"))
       {
         // 미승인 문서 리스트
-        int check = paperHandler.noneApprovalExist();
-
-        if (-1 < check)
-        {
-          selectPaperHandler.noneApprovalPaper();
-        } else
-        {
-          Prompt.println("승인할 문서가 없습니다.");
-
-          continue;
-        }
+        //        int check = paperHandler.noneApprovalExist();
+        //
+        //        if (-1 < check)
+        //        {
+        //          selectPaperHandler.noneApprovalPaper();
+        //        } else
+        //        {
+        //          Prompt.println("승인할 문서가 없습니다.");
+        //
+        //          continue;
+        //        }
       } else if (menu.equals("0"))
       {
         Prompt.println("뒤로갑니다.");

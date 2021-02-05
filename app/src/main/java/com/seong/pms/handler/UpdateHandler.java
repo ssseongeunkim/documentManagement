@@ -59,7 +59,7 @@ public class UpdateHandler {
       Member member;
       Paper paper;
 
-      for (int i = 0; i < MemberHandler.turn; i++)
+      for (int i = 0; i < MemberHandler.members.length; i++)
       {
         member = MemberHandler.members[i];
         paper = PaperHandler.papers[i];

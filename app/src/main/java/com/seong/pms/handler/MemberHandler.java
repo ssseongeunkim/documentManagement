@@ -1,16 +1,13 @@
 package com.seong.pms.handler;
 
 import com.seong.pms.domain.Member;
+import com.seong.util.List;
 import com.seong.util.Prompt;
 
 public class MemberHandler {
 
-  static final int SIZE = 5;
-
-  static int turn = 0; // 배열인덱스
-  int employeeNo = 0; // 사번
-
-  public static Member[] members = new Member[SIZE];
+  private int employeeNo = 0; // 사번
+  List memberList = new List();
 
   void add() {
     Prompt.println("");
@@ -18,10 +15,10 @@ public class MemberHandler {
 
     Member m = new Member();
 
-    m.id = ++this.employeeNo;
-    m.name = Prompt.inputString("이름> ");
-    m.age = Prompt.inputInt("나이> ");
-    m.joinDate = Prompt.nextDate("입사날짜(yyyy-MM-dd)> ");
+    m.setId(++this.employeeNo);
+    m.setName(Prompt.inputString("이름> "));
+    m.setAge(Prompt.inputInt("나이> "));
+    m.setJoinDate(Prompt.nextDate("입사날짜(yyyy-MM-dd)> "));
 
     while (true)
     {
@@ -30,13 +27,13 @@ public class MemberHandler {
       switch(userChoice)
       {
         case 1 :
-          m.department = "개발팀";
+          m.setDepartment("개발팀");
           break;
         case 2 :
-          m.department = "디자인팀";
+          m.setDepartment("디자인팀");
           break;
         case 3 :
-          m.department = "마케팅팀";
+          m.setDepartment("마케팅팀");
           break;
         default :
           Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");
@@ -50,21 +47,35 @@ public class MemberHandler {
 
     } // while
 
-    System.out.printf("%s직원의 정보가 입력되었습니다.\n", m.name);
+    memberList.add(m);
 
-    members[turn++] = m;
+    Prompt.println(String.format("%s직원의 정보가 입력되었습니다.", m.getName()));
   }
 
-  int exist(String valuse) {
-    for (int i = 0; i < turn; i++)
+  Member exist(String value) {
+    Object[] list = memberList.toArray();
+
+    for (int i = 0; i < list.length; i++)
     {
-      if (valuse.equalsIgnoreCase(members[i].name) || valuse.equals((i+1) + ""))
+      Member m = (Member) list[i];
+
+      if (value.equalsIgnoreCase(m.getName()) || value.equals((i + 1) + ""))
       {
-        return i;
+        return m;
       }
     }
 
-    return -1;
+    return null;
   }
 
+  void memberList() {
+    Object[] list = memberList.toArray();
+
+    for (Object obj : list)
+    {
+      Member m = (Member) obj;
+
+      Prompt.println(String.format("- %s(%d)", m.getName(), m.getId()));
+    }
+  }
 }

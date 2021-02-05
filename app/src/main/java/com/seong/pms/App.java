@@ -4,8 +4,6 @@
 package com.seong.pms;
 
 import com.seong.pms.handler.ListMenuHandler;
-import com.seong.pms.handler.MemberHandler;
-import com.seong.pms.handler.UpdateHandler;
 import com.seong.pms.handler.WriteMenuHandler;
 import com.seong.util.Prompt;
 
@@ -14,11 +12,11 @@ public class App {
   public static boolean company = true;
 
   public static void main(String[] args) {
-    MemberHandler memberHandler = new MemberHandler();
+    //    MemberHandler memberHandler = new MemberHandler();
 
     WriteMenuHandler writeHandler = new WriteMenuHandler();
-    ListMenuHandler listHandler = new ListMenuHandler();
-    UpdateHandler updateHandler = new UpdateHandler(memberHandler);
+    ListMenuHandler listHandler = new ListMenuHandler(writeHandler.memberHandler, writeHandler.paperHandler);
+    //    UpdateHandler updateHandler = new UpdateHandler(writeHandler.memberHandler);
 
 
     while (company)
@@ -29,35 +27,37 @@ public class App {
       {
         // 서류작성메뉴
         writeHandler.writeMenu();
-
       } else if (menu.equals("2")) 
       {
         // 서류목록
-        if (MemberHandler.members[0] == null)
+        if (writeHandler.paperHandler.paperList.exist())
         {
           Prompt.println("작성된 문서가 없습니다.");
           Prompt.println("");
           continue;
         }
 
+        //        System.out.println("준비중입니다.");
+        //        continue;
         listHandler.paperMenu();
 
       } else if (menu.equals("3"))
       {
-        if (MemberHandler.members[0] == null)
-        {
-          Prompt.println("수정할 서류가 없습니다.");
-          Prompt.println("");
-          continue;
-        }
+        //        if (MemberHandler.members[0] == null)
+        //        {
+        //          Prompt.println("수정할 서류가 없습니다.");
+        //          Prompt.println("");
+        //          continue;
+        //        }
 
-        updateHandler.service();
+        System.out.println("준비중입니다.");
+        continue;
+        //        updateHandler.service();
 
       } else if (menu.equals("99"))
       {
         // 종료
         Prompt.println("시스템을 종료합니다.");
-
         break;
       } else if (Prompt.inputCheck(menu))
       {
