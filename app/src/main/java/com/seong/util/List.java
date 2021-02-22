@@ -58,7 +58,9 @@ public class List {
 
 
 
-
+  public int size() {
+    return this.size;
+  }
 
   static class Node {
     // 다형적 변수

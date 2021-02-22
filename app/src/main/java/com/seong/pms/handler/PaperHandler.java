@@ -91,6 +91,7 @@ public class PaperHandler {
         p.setStartDate(Prompt.nextDate("휴가 시작 날짜(yyyy-MM-dd)> "));
         p.setEndDate(Prompt.nextDate("휴가 마지막 날짜(yyyy-MM-dd)> "));
         p.setHolidayReason(Prompt.inputString("사유> "));
+        p.setHolidayOk("미승인");
 
         Prompt.println(String.format("%s직원의 휴가신청서가 작성되었습니다.", m.getName()));
 
@@ -101,14 +102,13 @@ public class PaperHandler {
         Prompt.println(String.format("%s직원의 사직서를 입력을 시작합니다.", m.getName()));
         p.setOutDate(Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> "));
         p.setOutReason(Prompt.inputString("퇴사사유> "));
+        p.setOutOk("미승인");
 
         Prompt.println(String.format("%s직원의 사직서가 작성되었습니다.", m.getName()));
       } // if
 
       p.setName(m.getName());
       p.setId(m.getId());
-      p.setHolidayReason("미승인");
-      p.setOutReason("미승인");
 
       paperList.add(p);
 
@@ -116,22 +116,51 @@ public class PaperHandler {
     } // while
   }
 
-  void printAll() {
+  Paper[] arrayTurn() {
     Object[] list = paperList.toArray();
 
-    for (Object obj : list)
+    Paper[] papers = new Paper[paperList.size()];
+
+    for (int i = 0; i < paperList.size(); i++)
     {
-      Paper p = (Paper) obj;
+      papers[i] = (Paper) list[i];
+    }
+
+    for (int i = 0; i < paperList.size(); i++)
+    {
+      Paper temp;
+      for (int j = 0; j < paperList.size()-1; j++)
+      {
+        if (papers[j].getId() > papers[j+1].getId())
+        {
+          temp = papers[j];
+          papers[j] = papers[j+1];
+          papers[j+1] = temp;
+        }
+      }
+    }
+
+    return papers;
+
+  }
+
+  void printAll() {
+    Paper[] papers = arrayTurn();
+
+    for (Paper p : papers)
+    {
 
       Prompt.println(String.format("- %s(%d)직원의 정보", p.getName(), p.getId()));
 
       if (p.getHolidayOk() != null)
       {
+        //        System.out.println("p.getHolidayReason() : " + p.getHolidayReason());
         Prompt.println(String.format("- %s(%d)직원의 휴가신청서", p.getName(), p.getId()));
       }
 
       if (p.getOutOk() != null)
       {
+        //        System.out.println("p.getOutReason() : " + p.getOutReason());
         Prompt.println(String.format("- %s(%d)직원의 사직서", p.getName(), p.getId()));
       }
     }
