@@ -50,7 +50,12 @@ public class PaperHandler {
         continue; // 현재 while 문을 반복하기 위해 아래 break를 건너뜀
       }
 
-      Paper p = new Paper();
+      Paper p = exist(m.getId());
+
+      if (p == null)
+      {
+        p = new Paper();
+      }
 
       if (menu.equals("2"))
       {
@@ -142,6 +147,22 @@ public class PaperHandler {
 
     return papers;
 
+  }
+
+  Paper exist(int id) {
+    Object[] list = paperList.toArray();
+
+    for (Object obj : list)
+    {
+      Paper p = (Paper) obj;
+
+      if (p.getId() == id)
+      {
+        return p;
+      }
+    }
+
+    return null;
   }
 
   void printAll() {
