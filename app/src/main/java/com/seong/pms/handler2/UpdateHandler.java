@@ -1,8 +1,8 @@
-package com.seong.pms.handler;
+package com.seong.pms.handler2;
 
-import com.seong.pms.App;
+import com.seong.pms.App2;
 import com.seong.pms.domain.Member;
-import com.seong.pms.domain.Paper;
+import com.seong.pms.domain.Vacation;
 import com.seong.util.Prompt;
 
 public class UpdateHandler {
@@ -34,7 +34,7 @@ public class UpdateHandler {
       } else if (menu.equals("99"))
       {
         Prompt.println("시스템을 종료합니다.");
-        App.company = false; 
+        App2.company = false; 
         break;
       } else if (Prompt.inputCheck(menu))
       {
@@ -57,7 +57,7 @@ public class UpdateHandler {
       int holidayCheck = 0;
       int outCheck = 0;
       Member member;
-      Paper paper;
+      Vacation paper;
 
       for (int i = 0; i < MemberHandler.members.length; i++)
       {
@@ -91,7 +91,7 @@ public class UpdateHandler {
         // 종료
         Prompt.println("시스템을 종료합니다.");
         service = false;
-        App.company = false; // 시스템 while 종료
+        App2.company = false; // 시스템 while 종료
         break;
       } // if
 

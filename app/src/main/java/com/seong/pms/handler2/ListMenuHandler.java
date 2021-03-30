@@ -1,6 +1,6 @@
-package com.seong.pms.handler;
+package com.seong.pms.handler2;
 
-import com.seong.pms.App;
+import com.seong.pms.App2;
 import com.seong.util.Prompt;
 
 public class ListMenuHandler {
@@ -75,7 +75,7 @@ public class ListMenuHandler {
       {
         Prompt.println("시스템을 종료합니다.");
 
-        App.company = false;
+        App2.company = false;
         break;
       } else if (Prompt.inputCheck(menu))
       {

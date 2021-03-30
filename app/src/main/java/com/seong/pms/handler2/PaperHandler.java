@@ -1,14 +1,16 @@
-package com.seong.pms.handler;
+package com.seong.pms.handler2;
 
-import com.seong.pms.App;
+import com.seong.pms.App2;
+import com.seong.pms.domain.Vacation;
 import com.seong.pms.domain.Member;
-import com.seong.pms.domain.Paper;
+import com.seong.pms.domain.Resignation;
 import com.seong.util.List;
 import com.seong.util.Prompt;
 
 public class PaperHandler {
 
-  public List paperList = new List();
+  public List holidayList = new List();
+  List outList = new List();
   private MemberHandler memberHandler;
 
   //  public PaperHandler() {
@@ -38,7 +40,7 @@ public class PaperHandler {
         // 종료
         Prompt.println("시스템을 종료합니다.");
         WriteMenuHandler.write = false; // 서류작성 while 종료
-        App.company = false; // 시스템 while 종료
+        App2.company = false; // 시스템 while 종료
         break;
       } // if
 
@@ -50,12 +52,8 @@ public class PaperHandler {
         continue; // 현재 while 문을 반복하기 위해 아래 break를 건너뜀
       }
 
-      Paper p = exist(m.getId());
-
-      if (p == null)
-      {
-        p = new Paper();
-      }
+      Vacation h = new Vacation();
+      Resignation o = new Resignation();
 
       if (menu.equals("2"))
       {
@@ -70,16 +68,16 @@ public class PaperHandler {
           switch (userChoice)
           {
             case 1 :
-              p.setHoliday("연차");
+              h.setHoliday("연차");
               break;
             case 2 :
-              p.setHoliday("반차");
+              h.setHoliday("반차");
               break;
             case 3 :
-              p.setHoliday("병가");
+              h.setHoliday("병가");
               break;
             case 4 :
-              p.setHoliday("경조");
+              h.setHoliday("경조");
               break;
             default :
               Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");
@@ -93,10 +91,14 @@ public class PaperHandler {
           }
         }
 
-        p.setStartDate(Prompt.nextDate("휴가 시작 날짜(yyyy-MM-dd)> "));
-        p.setEndDate(Prompt.nextDate("휴가 마지막 날짜(yyyy-MM-dd)> "));
-        p.setHolidayReason(Prompt.inputString("사유> "));
-        p.setHolidayOk("미승인");
+        h.setStartDate(Prompt.nextDate("휴가 시작 날짜(yyyy-MM-dd)> "));
+        h.setEndDate(Prompt.nextDate("휴가 마지막 날짜(yyyy-MM-dd)> "));
+        h.setHolidayReason(Prompt.inputString("사유> "));
+        h.setHolidayOk("미승인");
+        h.setName(m.getName());
+        h.setId(m.getId());
+
+        holidayList.add(h);
 
         Prompt.println(String.format("%s직원의 휴가신청서가 작성되었습니다.", m.getName()));
 
@@ -105,94 +107,147 @@ public class PaperHandler {
         // 사직서
         Prompt.println("");
         Prompt.println(String.format("%s직원의 사직서를 입력을 시작합니다.", m.getName()));
-        p.setOutDate(Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> "));
-        p.setOutReason(Prompt.inputString("퇴사사유> "));
-        p.setOutOk("미승인");
+        o.setOutDate(Prompt.nextDate("퇴사날짜(yyyy-MM-dd)> "));
+        o.setOutReason(Prompt.inputString("퇴사사유> "));
+        o.setOutOk("미승인");
+        o.setName(m.getName());
+        o.setId(m.getId());
+
+        outList.add(h);
 
         Prompt.println(String.format("%s직원의 사직서가 작성되었습니다.", m.getName()));
       } // if
 
-      p.setName(m.getName());
-      p.setId(m.getId());
-
-      paperList.add(p);
 
       break;
     } // while
   }
 
-  Paper[] arrayTurn() {
-    Object[] list = paperList.toArray();
+  Vacation[] holidayTurn() {
+    Object[] list = holidayList.toArray();
 
-    Paper[] papers = new Paper[paperList.size()];
+    Vacation[] holidays = new Vacation[holidayList.size()];
 
-    for (int i = 0; i < paperList.size(); i++)
+    for (int i = 0; i < holidayList.size(); i++)
     {
-      papers[i] = (Paper) list[i];
+      holidays[i] = (Vacation) list[i];
     }
 
-    for (int i = 0; i < paperList.size(); i++)
+    for (int i = 0; i < holidayList.size(); i++)
     {
-      Paper temp;
-      for (int j = 0; j < paperList.size()-1; j++)
+      Vacation temp;
+      for (int j = 0; j < holidayList.size()-1; j++)
       {
-        if (papers[j].getId() > papers[j+1].getId())
+        if (holidays[j].getId() > holidays[j+1].getId())
         {
-          temp = papers[j];
-          papers[j] = papers[j+1];
-          papers[j+1] = temp;
+          temp = holidays[j];
+          holidays[j] = holidays[j+1];
+          holidays[j+1] = temp;
         }
       }
     }
 
-    return papers;
+    return holidays;
 
   }
 
-  Paper exist(int id) {
-    Object[] list = paperList.toArray();
+  Resignation[] outTurn() {
+    Object[] list = outList.toArray();
 
-    for (Object obj : list)
+    Resignation[] outs = new Resignation[outList.size()];
+
+    for (int i = 0; i < outList.size(); i++)
     {
-      Paper p = (Paper) obj;
+      outs[i] = (Resignation) list[i];
+    }
 
-      if (p.getId() == id)
+    for (int i = 0; i < outList.size(); i++)
+    {
+      Resignation temp;
+      for (int j = 0; j < outList.size()-1; j++)
       {
-        return p;
+        if (outs[j].getId() > outs[j+1].getId())
+        {
+          temp = outs[j];
+          outs[j] = outs[j+1];
+          outs[j+1] = temp;
+        }
       }
     }
 
-    return null;
+    return outs;
+
   }
+
+  //  HolidayPaper exist(int id) {
+  //    Object[] list = holidayPaperList.toArray();
+  //
+  //    for (Object obj : list)
+  //    {
+  //      HolidayPaper p = (HolidayPaper) obj;
+  //
+  //      if (p.getId() == id)
+  //      {
+  //        return p;
+  //      }
+  //    }
+  //
+  //    return new HolidayPaper();
+  //  }
 
   void printAll() {
-    Paper[] papers = arrayTurn();
+    Vacation[] h = holidayTurn();
+    Resignation[] o = outTurn();
 
-    for (Paper p : papers)
+    int size = holidayList.size();
+
+    while (true)
     {
+      if (holidayList.size() < outList.size())
+      {
+        size = outList.size();
+      }
 
-      Prompt.println(String.format("- %s(%d)직원의 정보", p.getName(), p.getId()));
+      Prompt.println(String.format("- %s(%d)직원의 정보", h.getName(), h.getId()));
 
-      if (p.getHolidayOk() != null)
+      if (h.getHolidayOk() != null)
       {
         //        System.out.println("p.getHolidayReason() : " + p.getHolidayReason());
-        Prompt.println(String.format("- %s(%d)직원의 휴가신청서", p.getName(), p.getId()));
+        Prompt.println(String.format("- %s(%d)직원의 휴가신청서", h.getName(), h.getId()));
       }
 
-      if (p.getOutOk() != null)
-      {
-        //        System.out.println("p.getOutReason() : " + p.getOutReason());
-        Prompt.println(String.format("- %s(%d)직원의 사직서", p.getName(), p.getId()));
-      }
+      size--;
     }
+
+    //    for (HolidayPaper h : holidays)
+    //    {
+    //
+    //      Prompt.println(String.format("- %s(%d)직원의 정보", h.getName(), h.getId()));
+    //
+    //      if (h.getHolidayOk() != null)
+    //      {
+    //        //        System.out.println("p.getHolidayReason() : " + p.getHolidayReason());
+    //        Prompt.println(String.format("- %s(%d)직원의 휴가신청서", h.getName(), h.getId()));
+    //      }
+    //
+    //    }
+    //
+    //    for (OutPaper o : outs)
+    //    {
+    //      if (o.getOutOk() != null)
+    //      {
+    //        //        System.out.println("p.getOutReason() : " + p.getOutReason());
+    //        Prompt.println(String.format("- %s(%d)직원의 사직서", o.getName(), o.getId()));
+    //      }
+    //    }
   }
 
   void existPaper(String name) {
-    Object[] list = paperList.toArray();
+    Object[] list = holidayList.toArray();
 
     for (Object obj : list)
     {
-      Paper p = (Paper) obj;
+      Vacation p = (Vacation) obj;
 
       if (p.getName().equals(name))
       {

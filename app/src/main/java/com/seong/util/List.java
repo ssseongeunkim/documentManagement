@@ -22,6 +22,7 @@ public class List {
     size++;
   }
 
+  // 이거 어디에..?
   public boolean exist() {
     if (first == null)
     {

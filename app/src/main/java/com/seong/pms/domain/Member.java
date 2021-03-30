@@ -3,18 +3,20 @@ package com.seong.pms.domain;
 import java.sql.Date;
 
 public class Member {
-  private int id; // 직원번호
+  private int no; // 직원번호
   private String name; // 직원이름
   private int age; // 직원나이
-  private String department; // 부서
+  private int department; // 부서
+  private int position; // 직위
   private Date joinDate; // 입사날짜
+  private String photo; // 사진
 
-  public int getId() {
-    return id;
+  public int getNo() {
+    return no;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setNo(int no) {
+    this.no = no;
   }
 
   public String getName() {
@@ -33,12 +35,20 @@ public class Member {
     this.age = age;
   }
 
-  public String getDepartment() {
+  public int getDepartment() {
     return department;
   }
 
-  public void setDepartment(String department) {
+  public void setDepartment(int department) {
     this.department = department;
+  }
+
+  public int getPosition() {
+    return position;
+  }
+
+  public void setPosition(int position) {
+    this.position = position;
   }
 
   public Date getJoinDate() {
@@ -48,6 +58,16 @@ public class Member {
   public void setJoinDate(Date joinDate) {
     this.joinDate = joinDate;
   }
+
+  public String getPhoto() {
+    return photo;
+  }
+
+  public void setPhoto(String photo) {
+    this.photo = photo;
+  }
+
+
 
 
 }

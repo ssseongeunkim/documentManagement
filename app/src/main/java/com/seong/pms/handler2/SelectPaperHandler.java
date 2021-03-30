@@ -1,6 +1,6 @@
-package com.seong.pms.handler;
+package com.seong.pms.handler2;
 
-import com.seong.pms.App;
+import com.seong.pms.App2;
 import com.seong.pms.domain.Member;
 import com.seong.util.Prompt;
 
@@ -30,7 +30,7 @@ public class SelectPaperHandler {
       {
         Prompt.println("시스템을 종료합니다.");
         ListMenuHandler.paper = false; // 서류작성 while 종료
-        App.company = false; // 시스템 while 종료
+        App2.company = false; // 시스템 while 종료
         break;
       }
 

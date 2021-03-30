@@ -6,61 +6,66 @@ import com.seong.util.Prompt;
 
 public class MemberHandler {
 
-  private int employeeNo = 0; // 사번
+  private int employeeNo = 0;
   List memberList = new List();
 
-  void add() {
-    Prompt.println("");
-    Prompt.println("직원정보 입력을 시작합니다.");
+  public void add() {
+    System.out.println();
+
+    Member member = new Member();
+
+    member.setNo(++employeeNo);
+    member.setName(Prompt.inputString("이름 : "));
+    member.setAge(Prompt.inputInt("나이 : "));
+    member.setDepartment(Prompt.inputInt("부서(1. 개발팀 2. 디자인팀 3. 마케팅팀) : "));
+    member.setPosition(Prompt.inputInt("직위 (1. 대표 2. 부장 3. 과장 4. 대리  5. 사원) : "));
+    member.setJoinDate(Prompt.inputDate("입사 날짜 : "));
+    member.setPhoto(Prompt.inputString("사진 : "));
+
+    memberList.add(member);
+
+    System.out.printf("%s님의 정보가 입력되었습니다.\n", member.getName());
+
+  }
+
+
+  boolean firstMember() {
+
+    if (memberList.size() == 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+
+  void printMember() {
+    Object[] list = memberList.toArray();
 
     Member m = new Member();
 
-    m.setId(++this.employeeNo);
-    m.setName(Prompt.inputString("이름> "));
-    m.setAge(Prompt.inputInt("나이> "));
-    m.setJoinDate(Prompt.nextDate("입사날짜(yyyy-MM-dd)> "));
+    for (Object arr : list) {
+      m = (Member) arr;
 
-    while (true)
-    {
-      int userChoice = Prompt.inputInt("부서(1. 개발팀 2. 디자인팀 3. 마케팅팀)> ");
+      System.out.printf("%d. %s\n", m.getNo(), m.getName());
+    }
 
-      switch(userChoice)
-      {
-        case 1 :
-          m.setDepartment("개발팀");
-          break;
-        case 2 :
-          m.setDepartment("디자인팀");
-          break;
-        case 3 :
-          m.setDepartment("마케팅팀");
-          break;
-        default :
-          Prompt.println("없는 메뉴 입니다. 다시 입력해주세요.");
-          Prompt.println("");
-      } // switch
-
-      if (1 <= userChoice && userChoice <= 3)
-      {
-        break;
-      }
-
-    } // while
-
-    memberList.add(m);
-
-    Prompt.println(String.format("%s직원의 정보가 입력되었습니다.", m.getName()));
   }
 
-  Member exist(String value) {
+
+  Member findByMember(String title) {
     Object[] list = memberList.toArray();
 
-    for (int i = 0; i < list.length; i++)
-    {
-      Member m = (Member) list[i];
+    printMember();
 
-      if (value.equalsIgnoreCase(m.getName()) || value.equals((i + 1) + ""))
-      {
+    int no = Prompt.inputInt(title);
+
+    Member m = new Member();
+
+    for (Object arr : list) {
+      m = (Member) arr;
+
+      if (m.getNo() == no) {
         return m;
       }
     }
@@ -68,14 +73,7 @@ public class MemberHandler {
     return null;
   }
 
-  void memberList() {
-    Object[] list = memberList.toArray();
 
-    for (Object obj : list)
-    {
-      Member m = (Member) obj;
 
-      Prompt.println(String.format("- %s(%d)", m.getName(), m.getId()));
-    }
-  }
+
 }
