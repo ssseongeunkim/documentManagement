@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Vacation {
   private int no;
+  private int memberNo;
   private String name;
   private int vacation; // 휴가종류
   private Date startDate; // 휴가시작날짜
@@ -16,6 +17,12 @@ public class Vacation {
   }
   public void setNo(int no) {
     this.no = no;
+  }
+  public int getMemberNo() {
+    return memberNo;
+  }
+  public void setMemberNo(int memberNo) {
+    this.memberNo = memberNo;
   }
   public String getName() {
     return name;
@@ -52,6 +59,42 @@ public class Vacation {
   }
   public void setApproval(int approval) {
     this.approval = approval;
+  }
+
+  public static String getVacation(int vacation) {
+    String part = "";
+
+    switch (vacation) {
+      case 1:
+        part = "연차";
+        break;
+      case 2:
+        part = "반차";
+        break;
+      case 3:
+        part = "병가";
+        break;
+      case 4:
+        part = "경조";
+        break;
+    }
+
+    return part;
+  }
+
+  public static String getApproval (int approval) {
+    String part = "";
+
+    switch (approval) {
+      case 0:
+        part = "미승인";
+        break;
+      case 1:
+        part = "승인";
+        break;
+    }
+
+    return part;
   }
 
 

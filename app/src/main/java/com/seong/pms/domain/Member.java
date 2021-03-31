@@ -67,6 +67,48 @@ public class Member {
     this.photo = photo;
   }
 
+  public static String getDepartment(int department) {
+    String part = "";
+
+    switch (department) {
+      case 1:
+        part = "개발팀";
+        break;
+      case 2:
+        part = "디자인팀";
+        break;
+      case 3:
+        part = "마케팅팀";
+        break;
+    }
+
+    return part;
+  }
+
+  public static String getPosition(int position) {
+    String part = "";
+
+    switch (position) {
+      case 1:
+        part = "대표";
+        break;
+      case 2:
+        part = "부장";
+        break;
+      case 3:
+        part = "과장";
+        break;
+      case 4:
+        part = "대리";
+        break;
+      case 5:
+        part = "사원";
+        break;
+    }
+
+    return part;
+  }
+
 
 
 

@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Resignation {
   private int no;
+  private int memberNo;
   private String name;
   private Date outDate; // 퇴사날짜
   private String reason; // 퇴사사유
@@ -14,6 +15,12 @@ public class Resignation {
   }
   public void setNo(int no) {
     this.no = no;
+  }
+  public int getMemberNo() {
+    return memberNo;
+  }
+  public void setMemberNo(int memberNo) {
+    this.memberNo = memberNo;
   }
   public String getName() {
     return name;
@@ -38,6 +45,21 @@ public class Resignation {
   }
   public void setApproval(int approval) {
     this.approval = approval;
+  }
+
+  public static String getApproval (int approval) {
+    String part = "";
+
+    switch (approval) {
+      case 0:
+        part = "미승인";
+        break;
+      case 1:
+        part = "승인";
+        break;
+    }
+
+    return part;
   }
 
 

@@ -10,14 +10,14 @@ public class MemberHandler {
   List memberList = new List();
 
   public void add() {
-    System.out.println();
+    System.out.println("\n[문서관리 시스템/사원정보 입력]");
 
     Member member = new Member();
 
     member.setNo(++employeeNo);
     member.setName(Prompt.inputString("이름 : "));
     member.setAge(Prompt.inputInt("나이 : "));
-    member.setDepartment(Prompt.inputInt("부서(1. 개발팀 2. 디자인팀 3. 마케팅팀) : "));
+    member.setDepartment(Prompt.inputInt("부서 (1. 개발팀 2. 디자인팀 3. 마케팅팀) : "));
     member.setPosition(Prompt.inputInt("직위 (1. 대표 2. 부장 3. 과장 4. 대리  5. 사원) : "));
     member.setJoinDate(Prompt.inputDate("입사 날짜 : "));
     member.setPhoto(Prompt.inputString("사진 : "));
@@ -29,8 +29,87 @@ public class MemberHandler {
   }
 
 
-  boolean firstMember() {
+  public void list() {
+    if (firstMember()) {
+      System.out.println("\n입력된 직원이 없습니다.\n");
+      return;
+    }
 
+    System.out.println("\n[문서관리 시스템/문서조회/사원정보 조회]");
+
+    Object[] list = memberList.toArray();
+
+    Member m = new Member();
+
+    for (Object arr : list) {
+      m = (Member) arr;
+
+      System.out.printf("%d. %s, %d, %s, %s, %s, %s\n",
+          m.getNo(),
+          m.getName(),
+          m.getAge(),
+          Member.getDepartment(m.getDepartment()),
+          Member.getPosition(m.getPosition()),
+          m.getJoinDate(),
+          m.getPhoto());
+    }
+
+    System.out.println();
+
+
+  }
+
+
+  public void detail() {
+    if (firstMember()) {
+      System.out.println("\n입력된 직원이 없습니다.\n");
+      return;
+    }
+
+    System.out.println("\n[문서관리 시스템/문서조회/선택조회/사원정보 조회]");
+
+    Member m = findByMember("조회할 직원 : ");
+
+    if (m == null) {
+      System.out.println("\n해당 번호의 직원이 없습니다.\n");
+      return;
+    }
+
+    System.out.printf("\n사번 : %d, 이름 : %s, 나이 : %d, 부서 : %s, 직급 : %s, 입사날짜 : %s, 사진 : %s\n\n",
+        m.getNo(), m.getName(), m.getAge(), 
+        Member.getDepartment(m.getDepartment()), 
+        Member.getPosition(m.getPosition()), 
+        m.getJoinDate(), m.getPhoto());
+  }
+
+
+  public void update() {
+    if (firstMember()) {
+      System.out.println("\n입력된 직원이 없습니다.\n");
+      return;
+    }
+
+    System.out.println("\n[문서관리 시스템/문서수정/사원정보 수정]");
+
+    Member m = findByMember("수정할 사원 : ");
+
+    if (m == null) {
+      System.out.println("\n해당 번호의 직원이 없습니다.\n");
+      return;
+    }
+
+    m.setName(Prompt.inputString("이름 : "));
+    m.setDepartment(Prompt.inputInt("부서 (1. 개발팀 2. 디자인팀 3. 마케팅팀) : "));
+    m.setPosition(Prompt.inputInt("직위 (1. 대표 2. 부장 3. 과장 4. 대리  5. 사원) : "));
+    m.setPhoto(Prompt.inputString("사진 : "));
+
+    System.out.printf("\n'%s'님의 정보가 수정되었습니다.\n\n", m.getName());
+
+
+  }
+
+
+  boolean firstMember() {
     if (memberList.size() == 0) {
       return true;
     }
@@ -39,7 +118,7 @@ public class MemberHandler {
   }
 
 
-  void printMember() {
+  Object[] printMember() {
     Object[] list = memberList.toArray();
 
     Member m = new Member();
@@ -50,13 +129,13 @@ public class MemberHandler {
       System.out.printf("%d. %s\n", m.getNo(), m.getName());
     }
 
+    return list;
+
   }
 
 
   Member findByMember(String title) {
-    Object[] list = memberList.toArray();
-
-    printMember();
+    Object[] list = printMember();
 
     int no = Prompt.inputInt(title);
 
