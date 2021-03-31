@@ -3,17 +3,17 @@ package com.seong.pms.domain;
 import java.sql.Date;
 
 public class Resignation {
-  private int id;
+  private int no;
   private String name;
   private Date outDate; // 퇴사날짜
-  private String outReason; // 퇴사사유
-  private String outOk; // 퇴사승인여부
+  private String reason; // 퇴사사유
+  private int approval; // 퇴사승인여부
 
-  public int getId() {
-    return id;
+  public int getNo() {
+    return no;
   }
-  public void setId(int id) {
-    this.id = id;
+  public void setNo(int no) {
+    this.no = no;
   }
   public String getName() {
     return name;
@@ -27,17 +27,17 @@ public class Resignation {
   public void setOutDate(Date outDate) {
     this.outDate = outDate;
   }
-  public String getOutReason() {
-    return outReason;
+  public String getReason() {
+    return reason;
   }
-  public void setOutReason(String outReason) {
-    this.outReason = outReason;
+  public void setReason(String reason) {
+    this.reason = reason;
   }
-  public String getOutOk() {
-    return outOk;
+  public int getApproval() {
+    return approval;
   }
-  public void setOutOk(String outOk) {
-    this.outOk = outOk;
+  public void setApproval(int approval) {
+    this.approval = approval;
   }
 
 

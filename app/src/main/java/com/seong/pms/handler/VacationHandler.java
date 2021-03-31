@@ -18,14 +18,14 @@ public class VacationHandler {
     System.out.println("");
 
     if (memberHandler.firstMember()) {
-      System.out.println("입력된 직원의 정보가 없습니다.");
+      System.out.println("입력된 직원의 정보가 없습니다.\n");
       return;
     }
 
     Member m = memberHandler.findByMember("문서 작성자 : ");
 
     if (m == null) {
-      System.out.println("해당 번호의 직원이 없습니다.");
+      System.out.println("\n해당 번호의 직원이 없습니다.\n");
       return;
     }
 
@@ -41,7 +41,7 @@ public class VacationHandler {
 
     vacationList.add(vacation);
 
-    System.out.printf("%s님의 휴가신청서가 작성되었습니다./n", vacation.getName());
+    System.out.printf("\n'%s'님의 휴가신청서가 작성되었습니다.\n\n", vacation.getName());
 
   }
 

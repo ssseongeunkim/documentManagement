@@ -24,7 +24,7 @@ public class MemberHandler {
 
     memberList.add(member);
 
-    System.out.printf("%s님의 정보가 입력되었습니다.\n", member.getName());
+    System.out.printf("%s님의 정보가 입력되었습니다.\n\n", member.getName());
 
   }
 
