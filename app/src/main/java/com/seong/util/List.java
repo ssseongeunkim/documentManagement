@@ -22,15 +22,6 @@ public class List {
     size++;
   }
 
-  // 이거 어디에..?
-  public boolean exist() {
-    if (first == null)
-    {
-      return true;
-    }
-
-    return false;
-  }
 
   public Object[] toArray() {
     //    System.out.println("size : " + this.size);
@@ -46,6 +37,39 @@ public class List {
     }
 
     return arr;
+  }
+
+
+  public void delete(int index) {
+    if (index < 0 || index >= this.size) {
+      return;
+    }
+
+    int count = 0;
+    Node cursor = first;
+    while (cursor != null) {
+      if (index == count++) {
+        this.size--;
+        if (first == last) {
+          first = last = null;
+          break;
+        }
+        if (cursor == first) {
+          first = cursor.next;
+          cursor.prev = null;
+        } else {
+          cursor.prev.next = cursor.next;
+          if (cursor.next != null) {
+            cursor.next.prev = cursor.prev;
+          }
+        }
+        if (cursor == last) {
+          last = cursor.prev;
+        }
+        break;
+      }
+      cursor = cursor.next;
+    }
   }
 
 

@@ -8,7 +8,7 @@ import com.seong.util.Prompt;
 public class ResignationHandler {
 
   private int paperNo = 0;
-  List resignationList = new List();
+  private List resignationList = new List();
   MemberHandler memberHandler;
 
   public ResignationHandler(MemberHandler memberHandler) {
@@ -74,7 +74,32 @@ public class ResignationHandler {
 
 
   public void detail() {
+    if (firstPaper()) {
+      System.out.println("\n입력된 퇴사신청서가 없습니다.\n");
+      return;
+    }
 
+    System.out.println("\n[문서관리 시스템/문서조회/선택조회/퇴사신청서 조회]");
+
+    Resignation r = findByResignation("조회할 퇴사신청서 : ");
+
+    if (r == null) {
+      System.out.println("\n해당 번호의 퇴사신청서가 없습니다.\n");
+      return;
+    }
+
+    System.out.println("\n==================================");
+    System.out.println("[퇴사신청서]");
+    System.out.printf("\n문서번호 : %d "
+        + "\n사번 : %d "
+        + "\n이름 : %s "
+        + "\n퇴사날짜 : %s "
+        + "\n\n상기 %s(본인)은 %s로 인하여 사직서를 제출하오니 허락하여 주시기 바랍니다."
+        + "\n\n승인여부 : %s\n",
+        r.getNo(), r.getMemberNo(), r.getName(), r.getOutDate(), 
+        r.getName(), r.getReason(), 
+        Resignation.getApproval(r.getApproval()));
+    System.out.println("==================================\n");
   }
 
 
@@ -100,6 +125,27 @@ public class ResignationHandler {
   }
 
 
+  public void delete() {
+    if (firstPaper()) {
+      System.out.println("\n입력된 퇴사신청서가 없습니다.\n");
+      return;
+    }
+
+    System.out.println("\n[문서관리 시스템/문서삭제/퇴사신청서 삭제]");
+
+    int no = indexOf("삭제할 퇴사신청서 : ");
+
+    if (no == -1) {
+      System.out.println("\n해당 번호의 퇴사신청서가 없습니다.\n");
+      return;
+    }
+
+    resignationList.delete(no);
+
+    System.out.println("\n퇴사신청서가 삭제되었습니다.\n");
+  }
+
+
   boolean firstPaper() {
     if (resignationList.size() == 0) {
       return true;
@@ -117,7 +163,7 @@ public class ResignationHandler {
     for (Object arr : list) {
       r = (Resignation) arr;
 
-      System.out.printf("%d. 휴가신청서(작성자 : %s(%d))\n", r.getNo(), r.getName(), r.getMemberNo());
+      System.out.printf("%d. 퇴사신청서(작성자 : %s(%d))\n", r.getNo(), r.getName(), r.getMemberNo());
     }
 
     return list;
@@ -140,6 +186,25 @@ public class ResignationHandler {
     }
 
     return null;
+  }
+
+
+  int indexOf(String title) {
+    Object[] list = printResignation();
+
+    int no = Prompt.inputInt(title);
+
+    Resignation r = new Resignation();
+
+    for (int i=0; i<list.length; i++) {
+      r = (Resignation) list[i];
+
+      if (r.getNo() == no) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
 

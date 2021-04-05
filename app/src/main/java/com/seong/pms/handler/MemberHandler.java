@@ -7,7 +7,7 @@ import com.seong.util.Prompt;
 public class MemberHandler {
 
   private int employeeNo = 0;
-  List memberList = new List();
+  private List memberList = new List();
 
   public void add() {
     System.out.println("\n[문서관리 시스템/사원정보 입력]");
@@ -75,11 +75,20 @@ public class MemberHandler {
       return;
     }
 
-    System.out.printf("\n사번 : %d, 이름 : %s, 나이 : %d, 부서 : %s, 직급 : %s, 입사날짜 : %s, 사진 : %s\n\n",
+    System.out.println("\n==================================");
+    System.out.println("[사원정보]");
+    System.out.printf("\n사번 : %d "
+        + "\n이름 : %s "
+        + "\n나이 : %d "
+        + "\n부서 : %s "
+        + "\n직급 : %s "
+        + "\n입사날짜 : %s "
+        + "\n사진 : %s\n",
         m.getNo(), m.getName(), m.getAge(), 
         Member.getDepartment(m.getDepartment()), 
         Member.getPosition(m.getPosition()), 
         m.getJoinDate(), m.getPhoto());
+    System.out.println("==================================\n");
   }
 
 
@@ -105,9 +114,29 @@ public class MemberHandler {
 
     System.out.printf("\n'%s'님의 정보가 수정되었습니다.\n\n", m.getName());
 
-
   }
 
+
+  public void delete() {
+    if (firstMember()) {
+      System.out.println("\n입력된 직원이 없습니다.\n");
+      return;
+    }
+
+    System.out.println("\n[문서관리 시스템/문서삭제/사원정보 삭제]");
+
+    int no = indexOf("삭제할 사원 : ");
+
+    if (no == -1) {
+      System.out.println("\n해당 번호의 사원이 없습니다.\n");
+      return;
+    }
+
+    memberList.delete(no);
+
+    System.out.println("\n사원의 정보가 삭제되었습니다.\n");
+
+  }
 
   boolean firstMember() {
     if (memberList.size() == 0) {
@@ -150,6 +179,24 @@ public class MemberHandler {
     }
 
     return null;
+  }
+
+  int indexOf(String title) {
+    Object[] list = printMember();
+
+    int no = Prompt.inputInt(title);
+
+    Member m = new Member();
+
+    for (int i=0; i<list.length; i++) {
+      m = (Member)list[i];
+
+      if (m.getNo() == no) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
 
