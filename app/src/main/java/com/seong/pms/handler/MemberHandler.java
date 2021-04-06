@@ -1,13 +1,13 @@
 package com.seong.pms.handler;
 
+import java.util.ArrayList;
 import com.seong.pms.domain.Member;
-import com.seong.util.List;
 import com.seong.util.Prompt;
 
 public class MemberHandler {
 
   private int employeeNo = 0;
-  private List memberList = new List();
+  private ArrayList<Member> memberList = new ArrayList<>();
 
   public void add() {
     System.out.println("\n[문서관리 시스템/사원정보 입력]");
@@ -132,7 +132,7 @@ public class MemberHandler {
       return;
     }
 
-    memberList.delete(no);
+    memberList.remove(no);
 
     System.out.println("\n사원의 정보가 삭제되었습니다.\n");
 

@@ -1,14 +1,14 @@
 package com.seong.pms.handler;
 
+import java.util.ArrayList;
 import com.seong.pms.domain.Member;
 import com.seong.pms.domain.Resignation;
-import com.seong.util.List;
 import com.seong.util.Prompt;
 
 public class ResignationHandler {
 
   private int paperNo = 0;
-  private List resignationList = new List();
+  private ArrayList<Resignation> resignationList = new ArrayList<>();
   MemberHandler memberHandler;
 
   public ResignationHandler(MemberHandler memberHandler) {
@@ -140,7 +140,7 @@ public class ResignationHandler {
       return;
     }
 
-    resignationList.delete(no);
+    resignationList.remove(no);
 
     System.out.println("\n퇴사신청서가 삭제되었습니다.\n");
   }

@@ -1,14 +1,14 @@
 package com.seong.pms.handler;
 
+import java.util.ArrayList;
 import com.seong.pms.domain.Member;
 import com.seong.pms.domain.Vacation;
-import com.seong.util.List;
 import com.seong.util.Prompt;
 
 public class VacationHandler {
 
   private int paperNo = 0;
-  private List vacationList = new List();
+  private ArrayList<Vacation> vacationList = new ArrayList<>();
   private MemberHandler memberHandler;
 
   public VacationHandler(MemberHandler memberHandler) {
@@ -147,7 +147,7 @@ public class VacationHandler {
       return;
     }
 
-    vacationList.delete(no);
+    vacationList.remove(no);
 
     System.out.println("\n휴가신청서가 삭제되었습니다.\n");
   }
