@@ -1,16 +1,53 @@
 package com.seong.pms;
 
-import com.seong.pms.handler.MemberHandler;
-import com.seong.pms.handler.ResignationHandler;
-import com.seong.pms.handler.VacationHandler;
+import java.util.ArrayList;
+import com.seong.pms.domain.Member;
+import com.seong.pms.domain.Resignation;
+import com.seong.pms.domain.Vacation;
+import com.seong.pms.handler.MemberAddHandler;
+import com.seong.pms.handler.MemberDeleteHandler;
+import com.seong.pms.handler.MemberDetailHandler;
+import com.seong.pms.handler.MemberListHandler;
+import com.seong.pms.handler.MemberUpdateHandler;
+import com.seong.pms.handler.MemberValidatorHandler;
+import com.seong.pms.handler.ResignationAddHandler;
+import com.seong.pms.handler.ResignationDeleteHandler;
+import com.seong.pms.handler.ResignationDetailHandler;
+import com.seong.pms.handler.ResignationListHandler;
+import com.seong.pms.handler.ResignationUpdateHandler;
+import com.seong.pms.handler.VacationAddHandler;
+import com.seong.pms.handler.VacationDeleteHandler;
+import com.seong.pms.handler.VacationDetailHandler;
+import com.seong.pms.handler.VacationListHandler;
+import com.seong.pms.handler.VacationUpdateHandler;
 import com.seong.util.Prompt;
 
 public class App {
   public static void main(String[] args) {
 
-    MemberHandler memberHandler = new MemberHandler();
-    VacationHandler vacationHandler = new VacationHandler(memberHandler);
-    ResignationHandler resignationHandler = new ResignationHandler(memberHandler);
+    //    MemberHandler memberHandler = new MemberHandler();
+    ArrayList<Member> memberList = new ArrayList<>();
+    MemberValidatorHandler memberValidatorHandler = new MemberValidatorHandler(memberList);
+    MemberAddHandler memberAddHandler = new MemberAddHandler(memberList);
+    MemberListHandler memberListHandler = new MemberListHandler(memberList, memberValidatorHandler);
+    MemberDetailHandler memberDetailHandler = new MemberDetailHandler(memberList, memberValidatorHandler);
+    MemberUpdateHandler memberUpdateHandler = new MemberUpdateHandler(memberList, memberValidatorHandler);
+    MemberDeleteHandler memberDeleteHandler = new MemberDeleteHandler(memberList, memberValidatorHandler);
+
+    ArrayList<Vacation> vacationList = new ArrayList<>();
+    VacationAddHandler vacationAddHandler = new VacationAddHandler(vacationList, memberValidatorHandler);
+    VacationListHandler vacationListHandler = new VacationListHandler(vacationList);
+    VacationDetailHandler vacationDetailHandler = new VacationDetailHandler(vacationList);
+    VacationUpdateHandler vacationUpdateHandler = new VacationUpdateHandler(vacationList);
+    VacationDeleteHandler vacationDeleteHandler = new VacationDeleteHandler(vacationList);
+
+    ArrayList<Resignation> resignationList = new ArrayList<>();
+    ResignationAddHandler resignationAddHandler = new ResignationAddHandler(resignationList, memberValidatorHandler);
+    ResignationListHandler resignationListHandler = new ResignationListHandler(resignationList);
+    ResignationDetailHandler resignationDetailHandler = new ResignationDetailHandler(resignationList);
+    ResignationUpdateHandler resignationUpdateHandler = new ResignationUpdateHandler(resignationList);
+    ResignationDeleteHandler resignationDeleteHandler = new ResignationDeleteHandler(resignationList);
+
 
     while (true) {
       int menu = Prompt.inputInt("[문서관리 시스템]\n 1. 문서입력\n 2. 문서조회\n 3. 문서수정\n 4. 문서삭제\n "
@@ -24,13 +61,13 @@ public class App {
 
             switch (menu) {
               case 1:
-                memberHandler.add();
+                memberAddHandler.add();
                 break;
               case 2:
-                vacationHandler.add();
+                vacationAddHandler.add();
                 break;
               case 3:
-                resignationHandler.add();
+                resignationAddHandler.add();
                 break;
               case 90:
                 System.out.println("\n뒤로갑니다.\n");
@@ -54,13 +91,13 @@ public class App {
 
                 switch (menu) {
                   case 1:
-                    memberHandler.list();
+                    memberListHandler.list();
                     break;
                   case 2:
-                    vacationHandler.list();
+                    vacationListHandler.list();
                     break;
                   case 3:
-                    resignationHandler.list();
+                    resignationListHandler.list();
                     break;
                   case 90:
                     System.out.println("\n뒤로갑니다.\n");
@@ -79,13 +116,13 @@ public class App {
 
                 switch (menu) {
                   case 1:
-                    memberHandler.detail();
+                    memberDetailHandler.detail();
                     break;
                   case 2:
-                    vacationHandler.detail();
+                    vacationDetailHandler.detail();
                     break;
                   case 3:
-                    resignationHandler.detail();
+                    resignationDetailHandler.detail();
                     break;
                   case 90:
                     System.out.println("\n뒤로갑니다.\n");
@@ -115,13 +152,13 @@ public class App {
 
             switch (menu) {
               case 1:
-                memberHandler.update();
+                memberUpdateHandler.update();
                 break;
               case 2:
-                vacationHandler.update();
+                vacationUpdateHandler.update();
                 break;
               case 3:
-                resignationHandler.update();
+                resignationUpdateHandler.update();
                 break;
               case 90:
                 System.out.println("\n뒤로갑니다.\n");
@@ -140,13 +177,13 @@ public class App {
 
             switch (menu) {
               case 1:
-                memberHandler.delete();
+                memberDeleteHandler.delete();
                 break;
               case 2:
-                vacationHandler.delete();
+                vacationDeleteHandler.delete();
                 break;
               case 3:
-                resignationHandler.delete();
+                resignationDeleteHandler.delete();
                 break;
               case 90:
                 System.out.println("\n뒤로갑니다.\n");
