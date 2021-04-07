@@ -1,13 +1,16 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.MemberDao;
 import com.seong.pms.domain.Member;
 import com.seong.util.Prompt;
 
-public class MemberAddHandler extends AbstractMemberHandler {
+public class MemberAddHandler implements Command {
 
-  public MemberAddHandler(List<Member> memberList) {
-    super(memberList);
+  private int employeeNo = 0;
+  MemberDao memberDao;
+
+  public MemberAddHandler(MemberDao memberDao) {
+    this.memberDao = memberDao;
   }
 
   @Override
@@ -24,7 +27,7 @@ public class MemberAddHandler extends AbstractMemberHandler {
     member.setJoinDate(Prompt.inputDate("입사 날짜 : "));
     member.setPhoto(Prompt.inputString("사진 : "));
 
-    memberList.add(member);
+    memberDao.insert(member);
 
     System.out.printf("%s님의 정보가 입력되었습니다.\n\n", member.getName());
 

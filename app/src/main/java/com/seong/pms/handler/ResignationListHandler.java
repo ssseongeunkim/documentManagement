@@ -1,24 +1,26 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.ResignationDao;
 import com.seong.pms.domain.Resignation;
 
-public class ResignationListHandler extends AbstractResignationHandler {
+public class ResignationListHandler implements Command {
 
-  public ResignationListHandler(List<Resignation> resignationList) {
-    super(resignationList);
+  ResignationDao resignationDao;
+
+  public ResignationListHandler(ResignationDao resignationDao) {
+    this.resignationDao = resignationDao;
   }
 
   @Override
   public void service() {
-    if (firstPaper()) {
+    if (resignationDao.firstPaper()) {
       System.out.println("\n작성된 퇴사신청서가 없습니다.\n");
       return;
     }
 
     System.out.println("\n[문서관리 시스템/문서조회/퇴사신청서 조회]");
 
-    Object[] list = resignationList.toArray();
+    Object[] list = resignationDao.findAll();
 
     Resignation r = new Resignation();
 

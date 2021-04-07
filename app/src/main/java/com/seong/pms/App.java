@@ -1,6 +1,12 @@
 package com.seong.pms;
 
 import java.util.ArrayList;
+import com.seong.pms.dao.MemberDao;
+import com.seong.pms.dao.ResignationDao;
+import com.seong.pms.dao.VacationDao;
+import com.seong.pms.dao.mariadb.MemberDaoImpl;
+import com.seong.pms.dao.mariadb.ResignationDaoImpl;
+import com.seong.pms.dao.mariadb.VacationDaoImpl;
 import com.seong.pms.domain.Member;
 import com.seong.pms.domain.Resignation;
 import com.seong.pms.domain.Vacation;
@@ -25,28 +31,34 @@ import com.seong.util.Prompt;
 public class App {
   public static void main(String[] args) {
 
-    //    MemberHandler memberHandler = new MemberHandler();
     ArrayList<Member> memberList = new ArrayList<>();
-    MemberValidatorHandler memberValidatorHandler = new MemberValidatorHandler(memberList);
-    MemberAddHandler memberAddHandler = new MemberAddHandler(memberList);
-    MemberListHandler memberListHandler = new MemberListHandler(memberList, memberValidatorHandler);
-    MemberDetailHandler memberDetailHandler = new MemberDetailHandler(memberList, memberValidatorHandler);
-    MemberUpdateHandler memberUpdateHandler = new MemberUpdateHandler(memberList, memberValidatorHandler);
-    MemberDeleteHandler memberDeleteHandler = new MemberDeleteHandler(memberList, memberValidatorHandler);
-
     ArrayList<Vacation> vacationList = new ArrayList<>();
-    VacationAddHandler vacationAddHandler = new VacationAddHandler(vacationList, memberValidatorHandler);
-    VacationListHandler vacationListHandler = new VacationListHandler(vacationList);
-    VacationDetailHandler vacationDetailHandler = new VacationDetailHandler(vacationList);
-    VacationUpdateHandler vacationUpdateHandler = new VacationUpdateHandler(vacationList);
-    VacationDeleteHandler vacationDeleteHandler = new VacationDeleteHandler(vacationList);
-
     ArrayList<Resignation> resignationList = new ArrayList<>();
-    ResignationAddHandler resignationAddHandler = new ResignationAddHandler(resignationList, memberValidatorHandler);
-    ResignationListHandler resignationListHandler = new ResignationListHandler(resignationList);
-    ResignationDetailHandler resignationDetailHandler = new ResignationDetailHandler(resignationList);
-    ResignationUpdateHandler resignationUpdateHandler = new ResignationUpdateHandler(resignationList);
-    ResignationDeleteHandler resignationDeleteHandler = new ResignationDeleteHandler(resignationList);
+
+    //    HashMap<String,Object> commandMap = new HashMap<>();
+
+    MemberDao memberDao = new MemberDaoImpl(memberList);
+    ResignationDao resignationDao = new ResignationDaoImpl(resignationList);
+    VacationDao vacationDao = new VacationDaoImpl(vacationList);
+
+    MemberValidatorHandler memberValidatorHandler = new MemberValidatorHandler(memberDao);
+    MemberAddHandler memberAddHandler = new MemberAddHandler(memberDao);
+    MemberListHandler memberListHandler = new MemberListHandler(memberDao);
+    MemberDetailHandler memberDetailHandler = new MemberDetailHandler(memberValidatorHandler, memberDao);
+    MemberUpdateHandler memberUpdateHandler = new MemberUpdateHandler(memberValidatorHandler, memberDao);
+    MemberDeleteHandler memberDeleteHandler = new MemberDeleteHandler(memberDao);
+
+    VacationAddHandler vacationAddHandler = new VacationAddHandler(memberValidatorHandler, vacationDao);
+    VacationListHandler vacationListHandler = new VacationListHandler(vacationDao);
+    VacationDetailHandler vacationDetailHandler = new VacationDetailHandler(vacationDao);
+    VacationUpdateHandler vacationUpdateHandler = new VacationUpdateHandler(vacationDao);
+    VacationDeleteHandler vacationDeleteHandler = new VacationDeleteHandler(vacationDao);
+
+    ResignationAddHandler resignationAddHandler = new ResignationAddHandler(memberValidatorHandler, resignationDao);
+    ResignationListHandler resignationListHandler = new ResignationListHandler(resignationDao);
+    ResignationDetailHandler resignationDetailHandler = new ResignationDetailHandler(resignationDao);
+    ResignationUpdateHandler resignationUpdateHandler = new ResignationUpdateHandler(resignationDao);
+    ResignationDeleteHandler resignationDeleteHandler = new ResignationDeleteHandler(resignationDao);
 
 
     while (true) {
@@ -218,3 +230,9 @@ public class App {
 
   }
 }
+
+
+
+//문서선택조회에서 사유는 빼기
+//그러면 회원선택조회도 살펴보기
+//업데이트, 딜리트 진행할때 정말 하시겠습니까 물어보기

@@ -1,18 +1,43 @@
-package com.seong.pms.handler;
+package com.seong.pms.dao.mariadb;
 
 import java.util.List;
+import com.seong.pms.dao.VacationDao;
 import com.seong.pms.domain.Vacation;
 import com.seong.util.Prompt;
 
-public abstract class AbstractVacationHandler implements Command{
-  protected int paperNo = 0;
-  protected List<Vacation> vacationList;
+public class VacationDaoImpl implements VacationDao{
 
-  public AbstractVacationHandler(List<Vacation> vacationHandler) {
-    this.vacationList = vacationHandler;
+  List<Vacation> vacationList;
+
+  public VacationDaoImpl(List<Vacation> vacationList) {
+    this.vacationList = vacationList;
   }
 
-  protected boolean firstPaper() {
+  @Override
+  public int insert(Vacation v) {
+    vacationList.add(v);
+
+    return 1;
+  }
+
+
+  @Override
+  public Object[] findAll() {
+    Object[] list = vacationList.toArray();
+
+    return list;
+  }
+
+
+  @Override
+  public int delete(int no) {
+    vacationList.remove(no);
+
+    return 1;
+  }
+
+  @Override
+  public boolean firstPaper() {
     if (vacationList.size() == 0) {
       return true;
     }
@@ -20,8 +45,8 @@ public abstract class AbstractVacationHandler implements Command{
     return false;
   }
 
-
-  protected Object[] printVacation() {
+  @Override
+  public Object[] printVacation() {
     Object[] list = vacationList.toArray();
 
     Vacation v = new Vacation();
@@ -35,8 +60,8 @@ public abstract class AbstractVacationHandler implements Command{
     return list;
   }
 
-
-  protected Vacation findByVacation(String title) {
+  @Override
+  public Vacation findByVacation(String title) {
     Object[] list = printVacation();
 
     int no = Prompt.inputInt(title);
@@ -54,8 +79,8 @@ public abstract class AbstractVacationHandler implements Command{
     return null;
   }
 
-
-  protected int indexOf(String title) {
+  @Override
+  public int indexOf(String title) {
     Object[] list = printVacation();
 
     int no = Prompt.inputInt(title);

@@ -1,24 +1,26 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.VacationDao;
 import com.seong.pms.domain.Vacation;
 
-public class VacationDetailHandler extends AbstractVacationHandler {
+public class VacationDetailHandler implements Command {
 
-  public VacationDetailHandler(List<Vacation> vacationHandler) {
-    super(vacationHandler);
+  VacationDao vacationDao;
+
+  public VacationDetailHandler(VacationDao vacationDao) {
+    this.vacationDao = vacationDao;
   }
 
   @Override
   public void service() {
-    if (firstPaper()) {
+    if (vacationDao.firstPaper()) {
       System.out.println("\n입력된 휴가신청서가 없습니다.\n");
       return;
     }
 
     System.out.println("\n[문서관리 시스템/문서조회/선택조회/휴가신청서 조회]");
 
-    Vacation v = findByVacation("조회할 휴가신청서 : ");
+    Vacation v = vacationDao.findByVacation("조회할 휴가신청서 : ");
 
     if (v == null) {
       System.out.println("\n해당 번호의 휴가신청서가 없습니다.\n");
@@ -31,8 +33,8 @@ public class VacationDetailHandler extends AbstractVacationHandler {
         + "\n사번 : %d "
         + "\n이름 : %s "
         + "\n휴가구분 : %s "
-        + "\n휴가기간 : %s ~ %s, "
-        + "\n\n상기 %s(본인)은 %s로 인하여 휴가신청서를 제출하오니\n 허락하여 주시기 바랍니다. "
+        + "\n휴가기간 : %s ~ %s "
+        + "\n\n상기 %s(본인)은 %s로 인하여 휴가신청서를 제출하오니\n허락하여 주시기 바랍니다. "
         + "\n\n승인여부 : %s\n",
         v.getNo(), v.getMemberNo(), v.getName(), Vacation.getVacation(v.getVacation()), v.getStartDate(), v.getEndDate(), 
         v.getName(), v.getReason(), Vacation.getApproval(v.getApproval()));

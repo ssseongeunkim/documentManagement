@@ -1,17 +1,19 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.ResignationDao;
 import com.seong.pms.domain.Member;
 import com.seong.pms.domain.Resignation;
 import com.seong.util.Prompt;
 
-public class ResignationAddHandler extends AbstractResignationHandler {
+public class ResignationAddHandler implements Command {
 
+  private int paperNo = 0;
   MemberValidatorHandler memberValidatorHandler;
+  ResignationDao resignationDao;
 
-  public ResignationAddHandler(List<Resignation> resignationList, MemberValidatorHandler memberValidatorHandler) {
-    super(resignationList);
+  public ResignationAddHandler(MemberValidatorHandler memberValidatorHandler, ResignationDao resignationDao) {
     this.memberValidatorHandler = memberValidatorHandler;
+    this.resignationDao = resignationDao;
   }
 
   @Override
@@ -39,7 +41,7 @@ public class ResignationAddHandler extends AbstractResignationHandler {
     resignation.setReason(Prompt.inputString("퇴사사유 : "));
     resignation.setApproval(0);
 
-    resignationList.add(resignation);
+    resignationDao.insert(resignation);
 
     System.out.printf("\n'%s'님의 퇴사신청서가 작성되었습니다.\n\n", resignation.getName());
 

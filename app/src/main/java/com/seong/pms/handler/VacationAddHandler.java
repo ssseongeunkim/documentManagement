@@ -1,17 +1,19 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.VacationDao;
 import com.seong.pms.domain.Member;
 import com.seong.pms.domain.Vacation;
 import com.seong.util.Prompt;
 
-public class VacationAddHandler extends AbstractVacationHandler {
+public class VacationAddHandler implements Command {
 
+  private int paperNo = 0;
   MemberValidatorHandler memberValidatorHandler;
+  VacationDao vacationDao;
 
-  public VacationAddHandler(List<Vacation> vacationHandler, MemberValidatorHandler memberValidatorHandler) {
-    super(vacationHandler);
+  public VacationAddHandler(MemberValidatorHandler memberValidatorHandler, VacationDao vacationDao) {
     this.memberValidatorHandler = memberValidatorHandler;
+    this.vacationDao = vacationDao;
   }
 
   @Override
@@ -41,7 +43,7 @@ public class VacationAddHandler extends AbstractVacationHandler {
     vacation.setReason(Prompt.inputString("휴가사유 : "));
     vacation.setApproval(0);
 
-    vacationList.add(vacation);
+    vacationDao.insert(vacation);
 
     System.out.printf("\n'%s'님의 휴가신청서가 작성되었습니다.\n\n", vacation.getName());
 

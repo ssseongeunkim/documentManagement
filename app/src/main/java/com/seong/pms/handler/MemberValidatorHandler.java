@@ -1,29 +1,28 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.MemberDao;
 import com.seong.pms.domain.Member;
 import com.seong.util.Prompt;
 
-public class MemberValidatorHandler extends AbstractMemberHandler {
+public class MemberValidatorHandler implements Command {
 
-  public MemberValidatorHandler(List<Member> memberList) {
-    super(memberList);
+  MemberDao memberDao;
+
+  public MemberValidatorHandler(MemberDao memberDao) {
+    this.memberDao = memberDao;
   }
 
   @Override
   public void service() {}
 
   public boolean firstMember() {
-    if (memberList.size() == 0) {
-      return true;
-    }
 
-    return false;
+    return memberDao.firstMember();
   }
 
 
   public Member findByMember(String title) {
-    Object[] list = printMember();
+    Object[] list = memberDao.printMember();
 
     int no = Prompt.inputInt(title);
 

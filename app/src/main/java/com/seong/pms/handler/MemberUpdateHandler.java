@@ -1,21 +1,22 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.MemberDao;
 import com.seong.pms.domain.Member;
 import com.seong.util.Prompt;
 
-public class MemberUpdateHandler extends AbstractMemberHandler {
+public class MemberUpdateHandler implements Command {
 
   MemberValidatorHandler memberValidatorHandler;
+  MemberDao memberDao;
 
-  public MemberUpdateHandler(List<Member> memberList, MemberValidatorHandler memberValidatorHandler) {
-    super(memberList);
+  public MemberUpdateHandler(MemberValidatorHandler memberValidatorHandler, MemberDao memberDao) {
     this.memberValidatorHandler = memberValidatorHandler;
+    this.memberDao = memberDao;
   }
 
   @Override
   public void service() {
-    if (memberValidatorHandler.firstMember()) {
+    if (memberDao.firstMember()) {
       System.out.println("\n입력된 직원이 없습니다.\n");
       return;
     }

@@ -1,19 +1,45 @@
-package com.seong.pms.handler;
+package com.seong.pms.dao.mariadb;
 
 import java.util.List;
+import com.seong.pms.dao.ResignationDao;
 import com.seong.pms.domain.Resignation;
 import com.seong.util.Prompt;
 
-public abstract class AbstractResignationHandler implements Command{
+public class ResignationDaoImpl implements ResignationDao{
 
-  protected int paperNo = 0;
-  protected List<Resignation> resignationList;
+  List<Resignation> resignationList;
 
-  public AbstractResignationHandler(List<Resignation> resignationList) {
+  public ResignationDaoImpl(List<Resignation> resignationList) {
     this.resignationList = resignationList;
   }
 
-  protected boolean firstPaper() {
+  @Override
+  public int insert(Resignation r) {
+    resignationList.add(r);
+
+    return 1;
+  }
+
+
+  @Override
+  public Object[] findAll() {
+    Object[] list = resignationList.toArray();
+
+    return list;
+  }
+
+
+  @Override
+  public int delete(int no) {
+    resignationList.remove(no);
+
+    return 1;
+  }
+
+
+  @Override
+  public boolean firstPaper() {
+
     if (resignationList.size() == 0) {
       return true;
     }
@@ -21,7 +47,9 @@ public abstract class AbstractResignationHandler implements Command{
     return false;
   }
 
-  protected Object[] printResignation() {
+
+  @Override
+  public Object[] printResignation() {
     Object[] list = resignationList.toArray();
 
     Resignation r = new Resignation();
@@ -36,7 +64,8 @@ public abstract class AbstractResignationHandler implements Command{
   }
 
 
-  protected Resignation findByResignation(String title) {
+  @Override
+  public Resignation findByResignation(String title) {
     Object[] list = printResignation();
 
     int no = Prompt.inputInt(title);
@@ -55,7 +84,8 @@ public abstract class AbstractResignationHandler implements Command{
   }
 
 
-  protected int indexOf(String title) {
+  @Override
+  public int indexOf(String title) {
     Object[] list = printResignation();
 
     int no = Prompt.inputInt(title);
@@ -72,5 +102,7 @@ public abstract class AbstractResignationHandler implements Command{
 
     return -1;
   }
+
+
 
 }

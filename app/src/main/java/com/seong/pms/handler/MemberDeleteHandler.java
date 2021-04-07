@@ -1,35 +1,32 @@
 package com.seong.pms.handler;
 
-import java.util.List;
-import com.seong.pms.domain.Member;
+import com.seong.pms.dao.MemberDao;
 
-public class MemberDeleteHandler extends AbstractMemberHandler {
+public class MemberDeleteHandler implements Command {
 
-  MemberValidatorHandler memberValidatorHandler;
+  MemberDao memberDao;
 
-  public MemberDeleteHandler(List<Member> memberList, MemberValidatorHandler memberValidatorHandler) {
-    super(memberList);
-    this.memberValidatorHandler = memberValidatorHandler;
-
+  public MemberDeleteHandler(MemberDao memberDao) {
+    this.memberDao = memberDao;
   }
 
   @Override
   public void service() {
-    if (memberValidatorHandler.firstMember()) {
+    if (memberDao.firstMember()) {
       System.out.println("\n입력된 직원이 없습니다.\n");
       return;
     }
 
     System.out.println("\n[문서관리 시스템/문서삭제/사원정보 삭제]");
 
-    int no = indexOf("삭제할 사원 : ");
+    int no = memberDao.indexOf("삭제할 사원 : ");
 
     if (no == -1) {
       System.out.println("\n해당 번호의 사원이 없습니다.\n");
       return;
     }
 
-    memberList.remove(no);
+    memberDao.delete(no);
 
     System.out.println("\n사원의 정보가 삭제되었습니다.\n");
 

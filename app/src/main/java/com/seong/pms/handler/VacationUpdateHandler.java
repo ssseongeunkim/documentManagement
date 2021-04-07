@@ -1,25 +1,27 @@
 package com.seong.pms.handler;
 
-import java.util.List;
+import com.seong.pms.dao.VacationDao;
 import com.seong.pms.domain.Vacation;
 import com.seong.util.Prompt;
 
-public class VacationUpdateHandler extends AbstractVacationHandler {
+public class VacationUpdateHandler implements Command {
 
-  public VacationUpdateHandler(List<Vacation> vacationHandler) {
-    super(vacationHandler);
+  VacationDao vacationDao;
+
+  public VacationUpdateHandler(VacationDao vacationDao) {
+    this.vacationDao = vacationDao;
   }
 
   @Override
   public void service() {
-    if (firstPaper()) {
+    if (vacationDao.firstPaper()) {
       System.out.println("\n작성된 휴가신청서가 없습니다.\n");
       return;
     }
 
     System.out.println("\n[문서관리 시스템/문서수정/휴가신청서 수정]");
 
-    Vacation v = findByVacation("수정할 휴가신청서 : ");
+    Vacation v = vacationDao.findByVacation("수정할 휴가신청서 : ");
 
     if (v == null) {
       System.out.println("\n해당 번호의 휴가신청서가 없습니다.\n");
