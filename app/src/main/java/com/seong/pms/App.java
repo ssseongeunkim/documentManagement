@@ -61,13 +61,13 @@ public class App {
 
             switch (menu) {
               case 1:
-                memberAddHandler.add();
+                memberAddHandler.service();
                 break;
               case 2:
-                vacationAddHandler.add();
+                vacationAddHandler.service();
                 break;
               case 3:
-                resignationAddHandler.add();
+                resignationAddHandler.service();
                 break;
               case 90:
                 System.out.println("\n뒤로갑니다.\n");
@@ -91,13 +91,13 @@ public class App {
 
                 switch (menu) {
                   case 1:
-                    memberListHandler.list();
+                    memberListHandler.service();
                     break;
                   case 2:
-                    vacationListHandler.list();
+                    vacationListHandler.service();
                     break;
                   case 3:
-                    resignationListHandler.list();
+                    resignationListHandler.service();
                     break;
                   case 90:
                     System.out.println("\n뒤로갑니다.\n");
@@ -116,13 +116,13 @@ public class App {
 
                 switch (menu) {
                   case 1:
-                    memberDetailHandler.detail();
+                    memberDetailHandler.service();
                     break;
                   case 2:
-                    vacationDetailHandler.detail();
+                    vacationDetailHandler.service();
                     break;
                   case 3:
-                    resignationDetailHandler.detail();
+                    resignationDetailHandler.service();
                     break;
                   case 90:
                     System.out.println("\n뒤로갑니다.\n");
@@ -152,13 +152,13 @@ public class App {
 
             switch (menu) {
               case 1:
-                memberUpdateHandler.update();
+                memberUpdateHandler.service();
                 break;
               case 2:
-                vacationUpdateHandler.update();
+                vacationUpdateHandler.service();
                 break;
               case 3:
-                resignationUpdateHandler.update();
+                resignationUpdateHandler.service();
                 break;
               case 90:
                 System.out.println("\n뒤로갑니다.\n");
@@ -177,13 +177,13 @@ public class App {
 
             switch (menu) {
               case 1:
-                memberDeleteHandler.delete();
+                memberDeleteHandler.service();
                 break;
               case 2:
-                vacationDeleteHandler.delete();
+                vacationDeleteHandler.service();
                 break;
               case 3:
-                resignationDeleteHandler.delete();
+                resignationDeleteHandler.service();
                 break;
               case 90:
                 System.out.println("\n뒤로갑니다.\n");

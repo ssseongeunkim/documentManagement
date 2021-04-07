@@ -4,7 +4,7 @@ import java.util.List;
 import com.seong.pms.domain.Member;
 import com.seong.util.Prompt;
 
-public abstract class AbstractMemberHandler {
+public abstract class AbstractMemberHandler implements Command {
 
   protected int employeeNo = 0;
   protected List<Member> memberList;

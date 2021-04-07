@@ -12,7 +12,8 @@ public class MemberDetailHandler extends AbstractMemberHandler {
     this.memberValidatorHandler = memberValidatorHandler;
   }
 
-  public void detail() {
+  @Override
+  public void service() {
     if (memberValidatorHandler.firstMember()) {
       System.out.println("\n입력된 직원이 없습니다.\n");
       return;

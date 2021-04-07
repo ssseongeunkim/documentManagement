@@ -14,7 +14,8 @@ public class VacationAddHandler extends AbstractVacationHandler {
     this.memberValidatorHandler = memberValidatorHandler;
   }
 
-  public void add() {
+  @Override
+  public void service() {
     if (memberValidatorHandler.firstMember()) {
       System.out.println("\n입력된 직원의 정보가 없습니다.\n");
       return;

@@ -10,6 +10,9 @@ public class MemberValidatorHandler extends AbstractMemberHandler {
     super(memberList);
   }
 
+  @Override
+  public void service() {}
+
   public boolean firstMember() {
     if (memberList.size() == 0) {
       return true;

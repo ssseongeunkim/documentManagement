@@ -9,7 +9,8 @@ public class VacationDetailHandler extends AbstractVacationHandler {
     super(vacationHandler);
   }
 
-  public void detail() {
+  @Override
+  public void service() {
     if (firstPaper()) {
       System.out.println("\n입력된 휴가신청서가 없습니다.\n");
       return;

@@ -9,7 +9,8 @@ public class ResignationDeleteHandler extends AbstractResignationHandler {
     super(resignationList);
   }
 
-  public void delete() {
+  @Override
+  public void service() {
     if (firstPaper()) {
       System.out.println("\n입력된 퇴사신청서가 없습니다.\n");
       return;

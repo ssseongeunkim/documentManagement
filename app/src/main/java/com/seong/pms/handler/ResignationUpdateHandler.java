@@ -10,7 +10,8 @@ public class ResignationUpdateHandler extends AbstractResignationHandler {
     super(resignationList);
   }
 
-  public void update() {
+  @Override
+  public void service() {
     if (firstPaper()) {
       System.out.println("\n작성된 퇴사신청서가 없습니다.\n");
       return;

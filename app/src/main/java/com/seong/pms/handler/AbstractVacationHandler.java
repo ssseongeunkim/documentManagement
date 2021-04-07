@@ -4,14 +4,14 @@ import java.util.List;
 import com.seong.pms.domain.Vacation;
 import com.seong.util.Prompt;
 
-public abstract class AbstractVacationHandler {
+public abstract class AbstractVacationHandler implements Command{
   protected int paperNo = 0;
   protected List<Vacation> vacationList;
 
   public AbstractVacationHandler(List<Vacation> vacationHandler) {
     this.vacationList = vacationHandler;
   }
-  
+
   protected boolean firstPaper() {
     if (vacationList.size() == 0) {
       return true;

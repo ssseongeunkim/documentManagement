@@ -4,7 +4,7 @@ import java.util.List;
 import com.seong.pms.domain.Resignation;
 import com.seong.util.Prompt;
 
-public abstract class AbstractResignationHandler {
+public abstract class AbstractResignationHandler implements Command{
 
   protected int paperNo = 0;
   protected List<Resignation> resignationList;

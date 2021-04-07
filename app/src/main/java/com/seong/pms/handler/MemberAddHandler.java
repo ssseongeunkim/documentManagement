@@ -10,7 +10,8 @@ public class MemberAddHandler extends AbstractMemberHandler {
     super(memberList);
   }
 
-  public void add() {
+  @Override
+  public void service() {
     System.out.println("\n[문서관리 시스템/사원정보 입력]");
 
     Member member = new Member();
@@ -28,4 +29,5 @@ public class MemberAddHandler extends AbstractMemberHandler {
     System.out.printf("%s님의 정보가 입력되었습니다.\n\n", member.getName());
 
   }
+
 }
